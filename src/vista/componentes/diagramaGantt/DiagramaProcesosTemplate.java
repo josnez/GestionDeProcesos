@@ -6,10 +6,12 @@ import javax.swing.JScrollPane;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import javax.swing.BorderFactory;
 
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import logica.Proceso;
 
 import java.util.LinkedList;
@@ -23,12 +25,13 @@ public class DiagramaProcesosTemplate extends JScrollPane {
 
     private LinkedList<Proceso> procesos;
     private JLabel lDiagrama;
-
-
-    private FontMetrics fm;
+    private Font fuente;
+    private Border borderT;
 
     public DiagramaProcesosTemplate() {
 
+        fuente = new Font("Comic Sans MS", Font.PLAIN, 17);
+        borderT = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY);
         procesos = new LinkedList<>();
         lDiagrama = new JLabel() {
             /**
@@ -42,16 +45,15 @@ public class DiagramaProcesosTemplate extends JScrollPane {
                 dibujar(g2d);
             }
         };
-        this.setViewportView(lDiagrama);
-
-        this.setSize(1200, 275);
         this.setBackground(null);
+        this.setViewportView(lDiagrama);
+        this.setBorder(BorderFactory.createTitledBorder(borderT, "Diagrama de Gantt", SwingConstants.LEFT, 0, fuente, Color.WHITE));
+        this.setSize(1200, 275);
     }
 
     private void dibujar(Graphics g) {
         if (procesos.isEmpty())
             return;
-        fm = g.getFontMetrics();
         int x, y, i;
         x = 48;
         y = 30;
