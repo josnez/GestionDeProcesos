@@ -17,10 +17,13 @@ public class Logica {
     private VistaPrincipalComponent vistaPrincipalComponent;
     private Procesador procesador;
 
-    private int tiempo;
+    private int tiempoInicial, tiempoFinal, tiempo;
 
     public Logica(){
 
+        tiempo = 0;
+        tiempoInicial = 0;
+        tiempoFinal = 3;
         colaProcesos = new LinkedList<>();
         colaProcesosGrafica = new ArrayList<>();
         vistaPrincipalComponent = new VistaPrincipalComponent(this);
@@ -41,15 +44,17 @@ public class Logica {
             procesador.start(); 
     }
 
+    private int generarTiempo(){
+        return (int) Math.floor(Math.random() * (tiempoFinal - tiempoInicial + 1) + tiempoFinal);
+    }
+
     private char generarNombre() {
         int n = (int) Math.floor(Math.random() * (90 - 64 + 1) + 64);
         return (char) n;
     }
 
     private int generarRafaga() {
-            int n = (int) Math.floor(Math.random() * 20 + 1);
-            return n;
-        
+            return (int) Math.floor(Math.random() * 10 + 1);
     }
 
     private Color generarColor() {
@@ -83,6 +88,22 @@ public class Logica {
 
     public Queue<Proceso> getColaProcesos() {
         return colaProcesos;
+    }
+
+    public int getTiempoInicial() {
+        return tiempoInicial;
+    }
+
+    public void setTiempoInicial(int tiempoInicial) {
+        this.tiempoInicial = tiempoInicial;
+    }
+
+    public int getTiempoFinal() {
+        return tiempoFinal;
+    }
+
+    public void setTiempoFinal(int tiempoFinal) {
+        this.tiempoFinal = tiempoFinal;
     }
 
 }

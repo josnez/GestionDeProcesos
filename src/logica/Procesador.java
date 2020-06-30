@@ -25,7 +25,9 @@ public class Procesador extends Thread {
     public void seccionCritica(Proceso c) {
 
         c.settComienzo(tiempo);
+        l.setTiempoInicial(tiempo);
         c.settFinal(c.getRafaga() + tiempo);
+        l.setTiempoFinal(c.gettFinal());
         c.settRetorno(c.gettFinal() - c.gettLlegada());
         c.settEspera(c.gettRetorno() - c.getRafaga());
         tiempo = tiempo + c.getRafaga();
@@ -46,7 +48,7 @@ public class Procesador extends Thread {
         for (i = 0; i < c.getRafaga(); i++) {
             try {
                 l.avanceProceso();
-                sleep(2000);
+                sleep(1500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
