@@ -53,8 +53,6 @@ public class Procesador extends Thread {
                 e.printStackTrace();
             }
         }
-        if(c.gettFinal()+i==tF)
-        System.out.println("Proceso Completado");
     }
 
     public void run() {

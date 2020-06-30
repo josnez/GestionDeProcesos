@@ -10,7 +10,7 @@ import vista.vistaPrincipal.VistaPrincipalComponent;
 import java.awt.Color;
 
 public class Logica {
-    
+
     private Queue<Proceso> colaProcesos;
     private ArrayList<Proceso> colaProcesosGrafica;
 
@@ -19,7 +19,7 @@ public class Logica {
 
     private int tiempoInicial, tiempoFinal, tiempo;
 
-    public Logica(){
+    public Logica() {
 
         tiempo = 0;
         tiempoInicial = 0;
@@ -36,15 +36,42 @@ public class Logica {
             Proceso c = new Proceso(generarNombre(), generarColor(), tiempo, generarRafaga());
             tiempo++;
             colaProcesos.add(c);
-            //Auxiliar para dibujar
+            // Auxiliar para dibujar
             colaProcesosGrafica.add(c);
-            System.out.println("");
         }
+        //ordenarCola();
         if (!procesador.isAlive())
-            procesador.start(); 
+            procesador.start();
     }
 
-    private int generarTiempo(){
+    private void ordenarCola() {
+        ArrayList<Proceso> colaAux = new ArrayList<>();
+        int menor;
+        for (Proceso proceso : colaProcesosGrafica) {
+            menor = colaProcesosGrafica.get(0).gettLlegada();
+
+            if (proceso.gettLlegada() < menor) {
+                menor = proceso.gettLlegada();
+            } else {
+                if (proceso.gettLlegada() > menor) {
+                    menor = menor;
+                }
+            }
+        }
+
+        for (Proceso proceso : colaProcesos) {
+            colaProcesos.poll();
+        }
+
+        colaProcesosGrafica.clear();
+        for (Proceso proceso : colaAux) {
+            colaProcesos.add(proceso);
+            colaProcesosGrafica.add(proceso);
+        }
+        
+    }
+
+    private int generarTiempo() {
         return (int) Math.floor(Math.random() * (tiempoFinal - tiempoInicial + 1) + tiempoFinal);
     }
 
@@ -54,7 +81,7 @@ public class Logica {
     }
 
     private int generarRafaga() {
-            return (int) Math.floor(Math.random() * 10 + 1);
+        return (int) Math.floor(Math.random() * 10 + 1);
     }
 
     private Color generarColor() {
@@ -66,7 +93,7 @@ public class Logica {
         return c;
     }
 
-    public void actualizarColaProcesos(){
+    public void actualizarColaProcesos() {
         vistaPrincipalComponent.actualizarColaProcesos();
     }
 
@@ -74,11 +101,11 @@ public class Logica {
         vistaPrincipalComponent.anadirProcesoTabla(proceso);
     }
 
-    public void procesoEnEjecucion(Proceso p){
+    public void procesoEnEjecucion(Proceso p) {
         vistaPrincipalComponent.procesoEnEjecucion(p);
     }
 
-    public void avanceProceso(){
+    public void avanceProceso() {
         vistaPrincipalComponent.actualizarDiagrama();
     }
 

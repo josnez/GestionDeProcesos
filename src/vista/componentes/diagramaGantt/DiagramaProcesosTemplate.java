@@ -54,10 +54,16 @@ public class DiagramaProcesosTemplate extends JScrollPane {
     private void dibujar(Graphics g) {
         if (procesos.isEmpty())
             return;
-        int x, y, i;
+        int x, y, i, max = 0;
         x = 48;
         y = 30;
-        for (i = 0; i <= procesos.getLast().gettFinal(); i++) {
+
+        for (Proceso proceso : procesos) {
+            if (proceso.gettFinal()>max) 
+                max = proceso.gettFinal();
+        }
+        
+        for (i = 0; i <= max; i++) {
             g.drawString(i + "", x, y);
             x += 20;
         }
@@ -81,11 +87,13 @@ public class DiagramaProcesosTemplate extends JScrollPane {
             g.drawRect(x, y, 20, 20);
             x+=20;
         }
+
         g.setColor(Color.LIGHT_GRAY);
         for(i = procesoActual.gettLlegada(); i<procesoActual.gettComienzo(); i++){
             g.fillRect(x, y, 20, 20);
             x+=20;
         }
+
         g.setColor(procesoActual.getColor());
         for(i = procesoActual.gettComienzo(); i<procesoActual.gettFinal(); i++){
             g.fillRect(x, y, 20, 20);
