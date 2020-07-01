@@ -1,6 +1,7 @@
 package logica;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
@@ -13,6 +14,7 @@ public class Logica {
 
     private Queue<Proceso> colaProcesos;
     private ArrayList<Proceso> colaProcesosGrafica;
+    private Iterator<Proceso> iT;
 
     private VistaPrincipalComponent vistaPrincipalComponent;
     private Procesador procesador;
@@ -45,9 +47,7 @@ public class Logica {
             procesador.start();
         }
         else {
-            procesador.suspend();
             ordenarPorRafaga(colaAux);
-            procesador.resume();
         }
     }
 
@@ -65,8 +65,9 @@ public class Logica {
                 }
             }
         }
-
-        for (Proceso proceso : colaProcesos) {
+        
+        iT = colaProcesos.iterator();
+        while (iT.hasNext()) {
             colaProcesos.poll();
         }
         System.out.println("Ordenado");

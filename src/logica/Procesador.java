@@ -1,24 +1,34 @@
 package logica;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Procesador extends Thread {
 
     private Logica l;
     private int tiempo;
+    private Queue<Proceso> procesos;
 
     public Procesador(Logica log) {
         super("Procesaminto");
         this.l = log;
         tiempo = 0;
+        procesos = new LinkedList<>();
     }
 
     private void administrarProcesos() {
+
         System.out.print("");
-        while (!l.getColaProcesos().isEmpty()) {
-            Proceso c = l.getColaProcesos().poll();
+        obtenerProcesos();
+        while (!procesos.isEmpty()) {
+            Proceso c = procesos.poll();
+            l.getColaProcesos().poll();
             // Auxiliar para dibujar
             l.getColaProcesosGrafica().remove(0);
             l.actualizarColaProcesos();
             seccionCritica(c);
+            obtenerProcesos();
         }
     }
 
@@ -52,6 +62,14 @@ public class Procesador extends Thread {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public synchronized void obtenerProcesos(){
+        Iterator iT = l.getColaProcesos().iterator();
+        this.procesos.clear();
+        while (iT.hasNext()) {
+            this.procesos.add((Proceso) iT.next());
         }
     }
 
