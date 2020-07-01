@@ -35,7 +35,7 @@ public class BarraHerramientasTemplate extends JPanel {
 
         iAux = new ImageIcon(iLogo.getImage().getScaledInstance(45, 45, Image.SCALE_AREA_AVERAGING));
         fuenteTitulo = new Font("Algerian", Font.BOLD, 20);
-        lTItulo = new JLabel("  Gestion de Procesos");
+        lTItulo = new JLabel("  Gestion de Procesos (SJF)");
         lTItulo.setFont(fuenteTitulo);
         lTItulo.setBounds(400, 0, 400 , 50);
         lTItulo.setForeground(Color.WHITE);

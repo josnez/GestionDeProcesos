@@ -27,7 +27,12 @@ public class ProcesosEnColaComponent implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        logica.nuevosProcesos();
-        procesosEnColaTemplate.actualizar();
+        if (e.getActionCommand().equals("<html><div align='center'>Agregar Procesos</div></html>")) {
+            
+            logica.nuevosProcesos();
+            procesosEnColaTemplate.actualizar();
+        } else {
+            
+        }
     }
 }
