@@ -27,7 +27,7 @@ public class ProcesosEnColaComponent implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        logica.nuevosClientes();
+        logica.nuevosProcesos();
         procesosEnColaTemplate.actualizar();
     }
 }

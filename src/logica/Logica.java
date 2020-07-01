@@ -30,31 +30,38 @@ public class Logica {
         procesador = new Procesador(this);
     }
 
-    public void nuevosClientes() {
+    public void nuevosProcesos() {
         int n = (int) Math.floor(Math.random() * 5 + 1);
+        ArrayList<Proceso> colaAux = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             Proceso c = new Proceso(generarNombre(), generarColor(), tiempo, generarRafaga());
-            tiempo++;
-            colaProcesos.add(c);
-            // Auxiliar para dibujar
-            colaProcesosGrafica.add(c);
+            System.out.println(c.getRafaga());
+            colaAux.add(c);
         }
-        //ordenarCola();
-        if (!procesador.isAlive())
+        tiempo++;
+
+        if (!procesador.isAlive()){
+            ordenarPorRafaga(colaAux);
             procesador.start();
+        }
+        else {
+            try {
+                procesador.sleep(1000);
+                ordenarPorRafaga(colaAux);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    private void ordenarCola() {
-        ArrayList<Proceso> colaAux = new ArrayList<>();
-        int menor;
-        for (Proceso proceso : colaProcesosGrafica) {
-            menor = colaProcesosGrafica.get(0).gettLlegada();
-
-            if (proceso.gettLlegada() < menor) {
-                menor = proceso.gettLlegada();
-            } else {
-                if (proceso.gettLlegada() > menor) {
-                    menor = menor;
+    private void ordenarPorRafaga(ArrayList<Proceso> colaAux) {
+        Proceso temporal;
+        for (int i = 0; i < colaAux.size(); i++) {
+            for (int j = 1; j < (colaAux.size() - i); j++) {
+                if (colaAux.get(j-1).getRafaga() > colaAux.get(j).getRafaga()) {
+                    temporal = colaAux.get(j-1);
+                    colaAux.set(j-1, colaAux.get(j));
+                    colaAux.set(j, temporal);
                 }
             }
         }
@@ -62,10 +69,12 @@ public class Logica {
         for (Proceso proceso : colaProcesos) {
             colaProcesos.poll();
         }
-
+        System.out.println("Ordenado");
         colaProcesosGrafica.clear();
         for (Proceso proceso : colaAux) {
+            System.out.println(proceso.getRafaga());
             colaProcesos.add(proceso);
+            // Auxiliar para dibujar
             colaProcesosGrafica.add(proceso);
         }
         
