@@ -45,16 +45,16 @@ public class Logica {
             procesador.start();
         }
         else {
-            try {
-                procesador.sleep(1000);
-                ordenarPorRafaga(colaAux);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            procesador.suspend();
+            ordenarPorRafaga(colaAux);
+            procesador.resume();
         }
     }
 
     private void ordenarPorRafaga(ArrayList<Proceso> colaAux) {
+        for (Proceso proceso : colaProcesos) {
+            colaAux.add(proceso);
+        }
         Proceso temporal;
         for (int i = 0; i < colaAux.size(); i++) {
             for (int j = 1; j < (colaAux.size() - i); j++) {

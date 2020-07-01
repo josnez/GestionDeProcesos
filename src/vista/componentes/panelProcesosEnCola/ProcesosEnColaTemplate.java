@@ -109,7 +109,7 @@ public class ProcesosEnColaTemplate extends JPanel {
 
         grph.setColor(Color.WHITE);
         grph.drawString("Proceso " + proceso.getNombre(), x + 10, y + 20);
-        grph.drawString("T llegada: " + proceso.gettLlegada(), x + 10, y + 35);
+        grph.drawString("Rafaga: " + proceso.getRafaga(), x + 10, y + 35);
         iterador++;
         if (!procesos.isEmpty() && iterador < procesos.size()) {
             dibujaCliente(grph, procesos.get(iterador), x + 110, y);

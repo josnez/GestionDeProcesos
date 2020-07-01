@@ -48,7 +48,7 @@ public class Procesador extends Thread {
         for (i = 0; i < c.getRafaga(); i++) {
             try {
                 l.avanceProceso();
-                sleep(1500);
+                sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
