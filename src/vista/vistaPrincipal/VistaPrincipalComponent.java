@@ -35,6 +35,10 @@ public class VistaPrincipalComponent {
         procesosEnColaComponent.actualizar();
     }
 
+    public void actualizarColaProcesosBloqueados(){
+        procesosEnColaComponent.actualizarBloqueados();
+    }
+
     public void actualizarDiagrama(){
         diagramaProcesosComponent.actualizar();
     }
@@ -42,6 +46,10 @@ public class VistaPrincipalComponent {
     public void anadirProcesoTabla(String[] proceso) {
         tablaProcesosComponent.anadirProceso(proceso);
     }
+
+    public void modificarTablaProceso(String[] datosTabla) {
+        tablaProcesosComponent.modificarProceso(datosTabla);
+	}
 
     public void procesoEnEjecucion(Proceso p){
         diagramaProcesosComponent.addProceso(p);

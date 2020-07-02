@@ -16,4 +16,8 @@ public class TablaProcesosComponent {
     public void anadirProceso(String[] proceso){
         tablaProcesosTemplate.anadirProceso(proceso);
     }
+
+	public void modificarProceso(String[] datosTabla) {
+        tablaProcesosTemplate.modificarProceso(datosTabla);
+	}
 }

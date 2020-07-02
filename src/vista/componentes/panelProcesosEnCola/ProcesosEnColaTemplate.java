@@ -33,12 +33,13 @@ public class ProcesosEnColaTemplate extends JPanel {
     private Border borderT;
     private Font fuente, fuente17;
 
-    private ArrayList<Proceso> procesos;
+    private ArrayList<Proceso> procesos, procesosBloqueados;
     private int x, y, iterador;
 
-    public ProcesosEnColaTemplate(ProcesosEnColaComponent procesosEnColaComponent, ArrayList<Proceso> procesos) {
+    public ProcesosEnColaTemplate(ProcesosEnColaComponent procesosEnColaComponent, ArrayList<Proceso> procesos, ArrayList<Proceso> procesosBloqueados) {
 
         this.procesos = procesos;
+        this.procesosBloqueados = procesosBloqueados;
         fuente = new Font("Comic Sans MS", Font.PLAIN, 15);
         fuente17 = new Font("Comic Sans MS", Font.PLAIN, 17);
         borderT = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY);
@@ -109,7 +110,7 @@ public class ProcesosEnColaTemplate extends JPanel {
                 grph.setFont(fuente);
                 grph.setColor(new Color(50, 50, 51));
                 grph.fillRect(0, 0, 550, 80);
-                //dibujaCola(g2d);
+                dibujaColaBloqueados(g2d);
             }
         };
         lProcesosBloqueados.setPreferredSize(new Dimension(520, 65));
@@ -153,8 +154,46 @@ public class ProcesosEnColaTemplate extends JPanel {
         }
     }
 
+    private void dibujaColaBloqueados(Graphics grph) {
+        int anchura = procesosBloqueados.size();
+        if (anchura == 0)
+            return;
+        y = 65;
+        x = (anchura * 115) + 10;
+        iterador = 0;
+        lProcesosBloqueados.setPreferredSize(new Dimension(x, y));
+        grph.setColor(new Color(50, 50, 51));
+        grph.fillRect(0, 0, x, y);
+        dibujaProcesoBloqueado(grph, procesosBloqueados.get(iterador), 10, 5);
+    }
+
+    private void dibujaProcesoBloqueado(Graphics grph, Proceso proceso, int x, int y) {
+        if (proceso == null)
+            return;
+
+        grph.setColor(Color.BLACK);
+        grph.drawRect(x-1, y-1, 101, 61);
+
+        grph.setColor(proceso.getColor());
+        grph.fillRect(x, y, 105, 60);
+
+        grph.setColor(Color.WHITE);
+        grph.drawString("Proceso " + proceso.getNombre(), x + 10, y + 20);
+        grph.drawString("Rafaga: " + proceso.getRafaga(), x + 10, y + 35);
+        grph.drawString("T. llegada: " + proceso.gettLlegada(), x + 10, y + 50);
+        iterador++;
+        if (!procesosBloqueados.isEmpty() && iterador < procesosBloqueados.size()) {
+            dibujaProcesoBloqueado(grph, procesosBloqueados.get(iterador), x + 115, y);
+        }
+    }
+
     public void actualizar() {
         lProcesos.repaint();
         lProcesos.updateUI();
+    }
+
+    public void actualizarBloqueados() {
+        lProcesosBloqueados.repaint();
+        lProcesosBloqueados.updateUI();
     }
 }

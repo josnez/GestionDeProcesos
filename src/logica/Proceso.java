@@ -63,4 +63,8 @@ public class Proceso {
         this.tEspera = tEspera;
     }
 
+    public void settRafaga(int rafaga) {
+        this.rafaga = rafaga;
+    }
+
 }

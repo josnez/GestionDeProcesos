@@ -52,4 +52,9 @@ public class TablaProcesosTemplate extends JScrollPane {
     public void anadirProceso(String[] proceso){
         modeloTabla.addRow(proceso);
     }
+
+	public void modificarProceso(String[] datosTabla) {
+        modeloTabla.removeRow(modeloTabla.getRowCount()-1);
+        modeloTabla.addRow(datosTabla);
+	}
 }

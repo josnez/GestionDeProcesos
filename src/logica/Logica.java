@@ -13,20 +13,23 @@ import java.awt.Color;
 public class Logica {
 
     private Queue<Proceso> colaProcesos;
-    private ArrayList<Proceso> colaProcesosGrafica;
+    private ArrayList<Proceso> colaProcesosGrafica, colaProcesosBloqueados;
     private Iterator<Proceso> iT;
 
     private VistaPrincipalComponent vistaPrincipalComponent;
     private Procesador procesador;
 
     private int tiempoInicial, tiempoFinal, tiempo;
+    private boolean bloqueado;
 
     public Logica() {
 
+        bloqueado = false;
         tiempo = 0;
         tiempoInicial = 0;
         tiempoFinal = 3;
         colaProcesos = new LinkedList<>();
+        colaProcesosBloqueados = new ArrayList<>();
         colaProcesosGrafica = new ArrayList<>();
         vistaPrincipalComponent = new VistaPrincipalComponent(this);
         procesador = new Procesador(this);
@@ -107,8 +110,16 @@ public class Logica {
         vistaPrincipalComponent.actualizarColaProcesos();
     }
 
+    public void actualizarColaProcesosBloqueados() {
+        vistaPrincipalComponent.actualizarColaProcesosBloqueados();
+    }
+
     public void anadirProcesoTabla(String[] proceso) {
         vistaPrincipalComponent.anadirProcesoTabla(proceso);
+    }
+
+    public void modificarProcesoTabla(String[] datosTabla) {
+        vistaPrincipalComponent.modificarTablaProceso(datosTabla);
     }
 
     public void procesoEnEjecucion(Proceso p) {
@@ -119,12 +130,20 @@ public class Logica {
         vistaPrincipalComponent.actualizarDiagrama();
     }
 
+    public boolean verificarEstadoProceso(){
+        return bloqueado;
+    }
+
     public ArrayList<Proceso> getColaProcesosGrafica() {
         return colaProcesosGrafica;
     }
 
     public Queue<Proceso> getColaProcesos() {
         return colaProcesos;
+    }
+
+    public ArrayList<Proceso> getColaProcesosBloqueados() {
+        return colaProcesosBloqueados;
     }
 
     public int getTiempoInicial() {
@@ -141,6 +160,10 @@ public class Logica {
 
     public void setTiempoFinal(int tiempoFinal) {
         this.tiempoFinal = tiempoFinal;
+    }
+
+    public void setBloqueado(boolean b) {
+        this.bloqueado = b;
     }
 
 }

@@ -13,7 +13,7 @@ public class ProcesosEnColaComponent implements ActionListener {
     public ProcesosEnColaComponent(Logica logica) {
 
         this.logica = logica;
-        procesosEnColaTemplate = new ProcesosEnColaTemplate(this, logica.getColaProcesosGrafica());
+        procesosEnColaTemplate = new ProcesosEnColaTemplate(this, logica.getColaProcesosGrafica(), logica.getColaProcesosBloqueados());
     }
 
     public ProcesosEnColaTemplate gProcesosEnColaTemplate() {
@@ -24,6 +24,10 @@ public class ProcesosEnColaComponent implements ActionListener {
         procesosEnColaTemplate.actualizar();
     }
 
+    public void actualizarBloqueados(){
+        procesosEnColaTemplate.actualizarBloqueados();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -32,7 +36,7 @@ public class ProcesosEnColaComponent implements ActionListener {
             logica.nuevosProcesos();
             procesosEnColaTemplate.actualizar();
         } else {
-            
+            logica.setBloqueado(true);
         }
     }
 }
