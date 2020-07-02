@@ -51,12 +51,14 @@ public class Procesador extends Thread {
         
         datosTabla[6] = "-";
         l.anadirProcesoTabla(datosTabla);
-        
         int tF = c.getRafaga() + tiempo, i, aux;
+        c.settFinal(tiempo);
+        c.settRetorno(tF - c.gettLlegada());
+        aux = c.getRafaga();
+        c.settEspera(c.gettRetorno() - aux);
         /* l.setTiempoFinal(tF);
         l.setTiempoInicial(tiempo); */
         l.procesoEnEjecucion(c);
-        aux = c.getRafaga();
         for (i = 0; i < aux; i++) {
             if(l.verificarEstadoProceso()){
                 l.getColaProcesosBloqueados().add(c);
@@ -75,9 +77,7 @@ public class Procesador extends Thread {
         }
         c.settFinal(tF);
         datosTabla[4] = c.gettFinal() + "";
-        c.settRetorno(tF - c.gettLlegada());
         datosTabla[5] = c.gettRetorno() + "";
-        c.settEspera(c.gettRetorno() - aux);
         datosTabla[6] = c.gettEspera() + "";
         l.modificarProcesoTabla(datosTabla);
     }
