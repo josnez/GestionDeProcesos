@@ -57,7 +57,7 @@ public class DiagramaProcesosTemplate extends JScrollPane {
             return;
         int x, y, i, max = 0;
         x = 48;
-        y = 30;
+        y = 25;
 
         for (Proceso proceso : procesos) {
             if (proceso.gettFinal() > max)
@@ -66,10 +66,12 @@ public class DiagramaProcesosTemplate extends JScrollPane {
 
         for (i = 0; i <= max; i++) {
             g.drawString(i + "", x, y);
+            g.drawLine(x+7, y+2, x+7, y+15);
+            g.drawLine(x+7, y+5, x+27, y+5);
             x += 20;
         }
         x = 40;
-        y += 10;
+        y += 20;
         for (Proceso proceso : procesos) {
             dibujarProceso(g, proceso, x, y);
             y += 20;
@@ -83,21 +85,23 @@ public class DiagramaProcesosTemplate extends JScrollPane {
         g.drawString(procesoActual.getNombre() + "", x, y + 15);
         x += 15;
 
-        g.setColor(Color.WHITE);
         for (i = 0; i < procesoActual.gettLlegada(); i++) {
+            x += 20;
+        }
+
+        for (i = procesoActual.gettLlegada(); i < procesoActual.gettComienzo(); i++) {
+            g.setColor(Color.LIGHT_GRAY);
+            g.fillRect(x, y, 20, 20);
+            g.setColor(Color.BLACK);
             g.drawRect(x, y, 20, 20);
             x += 20;
         }
 
-        g.setColor(Color.LIGHT_GRAY);
-        for (i = procesoActual.gettLlegada(); i < procesoActual.gettComienzo(); i++) {
-            g.fillRect(x, y, 20, 20);
-            x += 20;
-        }
-
-        g.setColor(procesoActual.getColor());
         for (i = procesoActual.gettComienzo(); i < procesoActual.gettFinal(); i++) {
+            g.setColor(procesoActual.getColor());
             g.fillRect(x, y, 20, 20);
+            g.setColor(Color.BLACK);
+            g.drawRect(x, y, 20, 20);
             x += 20;
         }
     }

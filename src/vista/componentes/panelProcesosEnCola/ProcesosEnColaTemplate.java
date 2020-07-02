@@ -159,7 +159,7 @@ public class ProcesosEnColaTemplate extends JPanel {
             return;
 
         grph.setColor(Color.BLACK);
-        grph.drawRect(x-1, y-1, 101, 61);
+        grph.drawRect(x-1, y-1, 106, 61);
 
         grph.setColor(proceso.getColor());
         grph.fillRect(x, y, 105, 60);
