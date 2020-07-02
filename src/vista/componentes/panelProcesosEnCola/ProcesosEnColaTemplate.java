@@ -4,10 +4,11 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.BorderFactory;
-
+import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.JScrollPane;
@@ -28,10 +29,11 @@ public class ProcesosEnColaTemplate extends JPanel {
 
     private JScrollPane scrollProcesosListos, scrollProcesosBloqueados;
     private JLabel lProcesos, lProcesosBloqueados;
-    private JButton bAddProcesos, bBloqueados;
+    private JButton bAddProcesos, bBloqueados, bDesbloquear;
 
     private Border borderT;
     private Font fuente, fuente17;
+    private ImageIcon iAux, iBloquear, iDesbloquear;
 
     private ArrayList<Proceso> procesos, procesosBloqueados;
     private int x, y, iterador;
@@ -43,6 +45,8 @@ public class ProcesosEnColaTemplate extends JPanel {
         fuente = new Font("Comic Sans MS", Font.PLAIN, 15);
         fuente17 = new Font("Comic Sans MS", Font.PLAIN, 17);
         borderT = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY);
+        iBloquear = new ImageIcon("resources/img/bloquear.png");
+        iDesbloquear = new ImageIcon("resources/img/desbloquear.png");
 
         bAddProcesos = new JButton("<html><div align='center'>Agregar Procesos</div></html>");
         bAddProcesos.setBounds(10, 10, 80, 40);
@@ -56,17 +60,33 @@ public class ProcesosEnColaTemplate extends JPanel {
         bAddProcesos.setCursor(new Cursor(Cursor.HAND_CURSOR));
         this.add(bAddProcesos);
 
-        bBloqueados = new JButton("<html><div align='center'>Bloquear Proceso</div></html>");
-        bBloqueados.setBounds(10, 60, 80, 40);
+        bBloqueados = new JButton();
+        bBloqueados.setBounds(10, 60, 40, 40);
         bBloqueados.setFocusable(false);
         bBloqueados.setContentAreaFilled(false);
         bBloqueados.addActionListener(procesosEnColaComponent);
         bBloqueados.setFont(fuente);
         bBloqueados.setForeground(Color.WHITE);
         bBloqueados.setBackground(null);
-        bBloqueados.setBorder(borderT);
         bBloqueados.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        iAux = new ImageIcon(iBloquear.getImage().getScaledInstance(30, 30, Image.SCALE_AREA_AVERAGING));
+        bBloqueados.setIcon(iAux);
+        bBloqueados.setBorder(null);
         this.add(bBloqueados);
+
+        bDesbloquear = new JButton();
+        bDesbloquear.setBounds(50, 60, 40, 40);
+        bDesbloquear.setFocusable(false);
+        bDesbloquear.setContentAreaFilled(false);
+        bDesbloquear.addActionListener(procesosEnColaComponent);
+        bDesbloquear.setFont(fuente);
+        bDesbloquear.setForeground(Color.WHITE);
+        bDesbloquear.setBackground(null);
+        bDesbloquear.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        iAux = new ImageIcon(iDesbloquear.getImage().getScaledInstance(30, 30, Image.SCALE_AREA_AVERAGING));
+        bDesbloquear.setIcon(iAux);
+        bDesbloquear.setBorder(null);
+        this.add(bDesbloquear);
 
         scrollProcesosListos = new JScrollPane();
         scrollProcesosListos.setBounds(100, 0, 550, 100);
@@ -196,4 +216,13 @@ public class ProcesosEnColaTemplate extends JPanel {
         lProcesosBloqueados.repaint();
         lProcesosBloqueados.updateUI();
     }
+
+    public JButton getbBloqueados() {
+        return bBloqueados;
+    }
+
+    public JButton getbDesbloquear() {
+        return bDesbloquear;
+    }
+
 }

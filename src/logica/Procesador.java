@@ -17,7 +17,7 @@ public class Procesador extends Thread {
         procesos = new LinkedList<>();
     }
 
-    private void administrarProcesos() {
+    private synchronized void administrarProcesos() {
 
         System.out.print("");
         obtenerProcesos();
@@ -29,6 +29,12 @@ public class Procesador extends Thread {
             l.actualizarColaProcesos();
             seccionCritica(c);
             obtenerProcesos();
+        }
+        try {
+            sleep(1000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 

@@ -2,7 +2,7 @@ package logica;
 
 import java.awt.Color;
 
-public class Proceso {
+public class Proceso implements Cloneable {
     
     private char nombre;
     private int tLlegada,rafaga, tComienzo, tFinal, tRetorno, tEspera;
@@ -14,6 +14,10 @@ public class Proceso {
         this.tLlegada = tLlegada;
         this.rafaga = rafaga;
     }
+
+    public Object clone() throws CloneNotSupportedException  { 
+        return super.clone(); 
+    } 
 
     public char getNombre() {
         return nombre;

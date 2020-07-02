@@ -35,8 +35,10 @@ public class ProcesosEnColaComponent implements ActionListener {
             
             logica.nuevosProcesos();
             procesosEnColaTemplate.actualizar();
-        } else {
+        } else if(e.getSource()==procesosEnColaTemplate.getbBloqueados()){
             logica.setBloqueado(true);
+        } else if(e.getSource()==procesosEnColaTemplate.getbDesbloquear()){
+            logica.desbloquear();
         }
     }
 }

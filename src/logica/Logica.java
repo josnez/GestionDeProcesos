@@ -84,6 +84,14 @@ public class Logica {
         
     }
 
+    public void desbloquear() {
+        ArrayList<Proceso> colita = new ArrayList<>();
+        colita.add(colaProcesosBloqueados.remove(0));
+        ordenarPorRafaga(colita);
+        actualizarColaProcesos();
+        actualizarColaProcesosBloqueados();
+    }
+    
     private int generarTiempo() {
         return (int) Math.floor(Math.random() * (tiempoFinal - tiempoInicial + 1) + tiempoFinal);
     }

@@ -47,7 +47,8 @@ public class DiagramaProcesosTemplate extends JScrollPane {
         };
         this.setBackground(null);
         this.setViewportView(lDiagrama);
-        this.setBorder(BorderFactory.createTitledBorder(borderT, "Diagrama de Gantt", SwingConstants.LEFT, 0, fuente, Color.WHITE));
+        this.setBorder(BorderFactory.createTitledBorder(borderT, "Diagrama de Gantt", SwingConstants.LEFT, 0, fuente,
+                Color.WHITE));
         this.setSize(1200, 275);
     }
 
@@ -59,10 +60,10 @@ public class DiagramaProcesosTemplate extends JScrollPane {
         y = 30;
 
         for (Proceso proceso : procesos) {
-            if (proceso.gettFinal()>max) 
+            if (proceso.gettFinal() > max)
                 max = proceso.gettFinal();
         }
-        
+
         for (i = 0; i <= max; i++) {
             g.drawString(i + "", x, y);
             x += 20;
@@ -71,7 +72,7 @@ public class DiagramaProcesosTemplate extends JScrollPane {
         y += 10;
         for (Proceso proceso : procesos) {
             dibujarProceso(g, proceso, x, y);
-            y += 20; 
+            y += 20;
         }
         calcularTamano();
     }
@@ -79,30 +80,36 @@ public class DiagramaProcesosTemplate extends JScrollPane {
     private void dibujarProceso(Graphics g, Proceso procesoActual, int x, int y) {
         int i;
         g.setColor(Color.BLACK);
-        g.drawString(procesoActual.getNombre() + "", x, y+15);
+        g.drawString(procesoActual.getNombre() + "", x, y + 15);
         x += 15;
 
         g.setColor(Color.WHITE);
-        for(i = 0; i<procesoActual.gettLlegada(); i++){
+        for (i = 0; i < procesoActual.gettLlegada(); i++) {
             g.drawRect(x, y, 20, 20);
-            x+=20;
+            x += 20;
         }
 
         g.setColor(Color.LIGHT_GRAY);
-        for(i = procesoActual.gettLlegada(); i<procesoActual.gettComienzo(); i++){
+        for (i = procesoActual.gettLlegada(); i < procesoActual.gettComienzo(); i++) {
             g.fillRect(x, y, 20, 20);
-            x+=20;
+            x += 20;
         }
 
         g.setColor(procesoActual.getColor());
-        for(i = procesoActual.gettComienzo(); i<procesoActual.gettFinal(); i++){
+        for (i = procesoActual.gettComienzo(); i < procesoActual.gettFinal(); i++) {
             g.fillRect(x, y, 20, 20);
-            x+=20;
+            x += 20;
         }
     }
 
     public void addProDiagrama(Proceso p) {
-        procesos.add(p);
+        Proceso p1 = p;
+        try {
+            p1 = (Proceso) p.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        procesos.add(p1);
     }
 
     public void avanceProceso() {
