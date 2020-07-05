@@ -39,18 +39,18 @@ public class Logica {
         int n = (int) Math.floor(Math.random() * 5 + 1);
         ArrayList<Proceso> colaAux = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            Proceso c = new Proceso(generarNombre(), generarColor(), tiempo, generarRafaga());
+            Proceso c = new Proceso(generarNombre(), generarColor(), tiempo, generarRafaga(), generarPrioridad());
             System.out.println(c.getRafaga());
             colaAux.add(c);
         }
         tiempo++;
 
         if (!procesador.isAlive()){
-            ordenarPorRafaga(colaAux);
+            ordenarPorPrioridad(colaAux);
             procesador.start();
         }
         else {
-            ordenarPorRafaga(colaAux);
+            ordenarPorPrioridad(colaAux);
         }
     }
 
@@ -84,6 +84,36 @@ public class Logica {
         
     }
 
+    private void ordenarPorPrioridad(ArrayList<Proceso> colaAux) {
+        for (Proceso proceso : colaProcesos) {
+            colaAux.add(proceso);
+        }
+        Proceso temporal;
+        for (int i = 0; i < colaAux.size(); i++) {
+            for (int j = 1; j < (colaAux.size() - i); j++) {
+                if (colaAux.get(j-1).getPrioridad() > colaAux.get(j).getPrioridad()) {
+                    temporal = colaAux.get(j-1);
+                    colaAux.set(j-1, colaAux.get(j));
+                    colaAux.set(j, temporal);
+                }
+            }
+        }
+        
+        iT = colaProcesos.iterator();
+        while (iT.hasNext()) {
+            colaProcesos.poll();
+        }
+        System.out.println("Ordenado");
+        colaProcesosGrafica.clear();
+        for (Proceso proceso : colaAux) {
+            System.out.println(proceso.getRafaga());
+            colaProcesos.add(proceso);
+            // Auxiliar para dibujar
+            colaProcesosGrafica.add(proceso);
+        }
+        
+    }
+
     public void desbloquear() {
         ArrayList<Proceso> colita = new ArrayList<>();
         colita.add(colaProcesosBloqueados.remove(0));
@@ -94,6 +124,10 @@ public class Logica {
     
     private int generarTiempo() {
         return (int) Math.floor(Math.random() * (tiempoFinal - tiempoInicial + 1) + tiempoFinal);
+    }
+
+    private int generarPrioridad() {
+        return (int) Math.floor(Math.random() * 4 + 1);
     }
 
     private char generarNombre() {

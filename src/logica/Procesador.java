@@ -31,7 +31,7 @@ public class Procesador extends Thread {
             obtenerProcesos();
         }
         try {
-            sleep(1000);
+            sleep(1500);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -40,22 +40,23 @@ public class Procesador extends Thread {
 
     public void seccionCritica(Proceso c) {
 
-        String[] datosTabla = new String[7];
+        String[] datosTabla = new String[8];
 
         datosTabla[0] = c.getNombre() + "";
         datosTabla[1] = c.gettLlegada() + "";
-        datosTabla[2] = c.getRafaga() + "";
+        datosTabla[2] = c.getPrioridad() + "";
+        datosTabla[3] = c.getRafaga() + "";
 
         c.settComienzo(tiempo);
-        datosTabla[3] = c.gettComienzo() + "";
-        
-        datosTabla[4] = "-";
-        
+        datosTabla[4] = c.gettComienzo() + "";
         
         datosTabla[5] = "-";
         
         
         datosTabla[6] = "-";
+        
+        
+        datosTabla[7] = "-";
         l.anadirProcesoTabla(datosTabla);
         int tF = c.getRafaga() + tiempo, i, aux;
         c.settFinal(tiempo);
@@ -82,9 +83,9 @@ public class Procesador extends Thread {
             }
         }
         c.settFinal(tF);
-        datosTabla[4] = c.gettFinal() + "";
-        datosTabla[5] = c.gettRetorno() + "";
-        datosTabla[6] = c.gettEspera() + "";
+        datosTabla[5] = c.gettFinal() + "";
+        datosTabla[6] = c.gettRetorno() + "";
+        datosTabla[7] = c.gettEspera() + "";
         l.modificarProcesoTabla(datosTabla);
     }
 

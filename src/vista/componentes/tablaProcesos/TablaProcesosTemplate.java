@@ -35,6 +35,7 @@ public class TablaProcesosTemplate extends JScrollPane {
         modeloTabla = new DefaultTableModel();
         modeloTabla.addColumn("Proceso");
         modeloTabla.addColumn("TiempoLlegada");
+        modeloTabla.addColumn("Prioridad");
         modeloTabla.addColumn("Rafaga");
         modeloTabla.addColumn("Tiempo Comienzo");
         modeloTabla.addColumn("Tiempo Final");
