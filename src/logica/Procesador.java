@@ -7,17 +7,18 @@ import java.util.Queue;
 public class Procesador extends Thread {
 
     private Logica l;
-    private int tiempo;
+    private int quantum, tiempo;
     private Queue<Proceso> procesos;
 
-    public Procesador(Logica log) {
+    public Procesador(Logica log, int quantum) {
         super("Procesaminto");
         this.l = log;
+        this.quantum = quantum;
         tiempo = 0;
         procesos = new LinkedList<>();
     }
 
-    private synchronized void administrarProcesos() {
+    private void administrarProcesos() {
 
         System.out.print("");
         obtenerProcesos();
@@ -28,64 +29,91 @@ public class Procesador extends Thread {
             l.getColaProcesosGrafica().remove(0);
             l.actualizarColaProcesos();
             seccionCritica(c);
+            if (c.getRafaga() > 0 && !l.estaBloqueado()) {
+                c.settLlegadaAux(c.gettFinal());
+                l.getColaProcesos().add(c);
+                l.getColaProcesosGrafica().add(c);
+                l.actualizarColaProcesos();                
+            } else {
+                l.setBloqueado(false);
+            }
             obtenerProcesos();
         }
         try {
             sleep(1500);
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
-        }
+        } 
     }
 
     public void seccionCritica(Proceso c) {
 
-        String[] datosTabla = new String[8];
+        String[] datosTabla = new String[7];
 
         datosTabla[0] = c.getNombre() + "";
-        datosTabla[1] = c.gettLlegada() + "";
-        datosTabla[2] = c.getPrioridad() + "";
-        datosTabla[3] = c.getRafaga() + "";
+        datosTabla[1] = c.getTiempoLlegadaAux() + "";
+        datosTabla[2] = c.getRafaga() + "";
 
         c.settComienzo(tiempo);
-        datosTabla[4] = c.gettComienzo() + "";
+        datosTabla[3] = c.gettComienzo() + "";
+        
+        datosTabla[4] = "-";
+        
         
         datosTabla[5] = "-";
         
         
         datosTabla[6] = "-";
-        
-        
-        datosTabla[7] = "-";
         l.anadirProcesoTabla(datosTabla);
-        int tF = c.getRafaga() + tiempo, i, aux;
+        int i;
         c.settFinal(tiempo);
-        c.settRetorno(tF - c.gettLlegada());
-        aux = c.getRafaga();
-        c.settEspera(c.gettRetorno() - aux);
-        /* l.setTiempoFinal(tF);
-        l.setTiempoInicial(tiempo); */
         l.procesoEnEjecucion(c);
-        for (i = 0; i < aux; i++) {
-            if(l.verificarEstadoProceso()){
-                l.getColaProcesosBloqueados().add(c);
-                l.setBloqueado(false);
-                l.actualizarColaProcesosBloqueados();
-                return;
+        if (c.getRafaga()>=4) {
+            for (i = 1; i <= quantum; i++) {
+                if(l.estaBloqueado()){
+                    c.settLlegadaAux(c.getTiempoLlegadaAux()+i-1);
+                    l.getColaProcesosBloqueados().add(c);                    
+                    l.actualizarColaProcesosBloqueados();
+                    return;
+                }
+                c.settRafaga(c.getRafaga()-1);
+                c.settRafagaEjecutada(c.getRafagaEjecutada()+1);
+                tiempo++;
+                try {
+                    l.avanceProceso();
+                    sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-            c.settRafaga(c.getRafaga()-1);
-            tiempo++;
-            try {
-                l.avanceProceso();
-                sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        } else {
+            int rafaga = c.getRafaga();
+            for (i = 1; i <= rafaga; i++) {
+                if(l.estaBloqueado()){
+                    c.settLlegadaAux(c.getTiempoLlegadaAux()+i-1);
+                    l.getColaProcesosBloqueados().add(c);
+                    l.setBloqueado(false);
+                    l.actualizarColaProcesosBloqueados();
+                    return;
+                }
+                c.settRafaga(c.getRafaga()-1);
+                c.settRafagaEjecutada(c.getRafagaEjecutada()+1);
+                tiempo++;
+                try {
+                    l.avanceProceso();
+                    sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
-        c.settFinal(tF);
-        datosTabla[5] = c.gettFinal() + "";
-        datosTabla[6] = c.gettRetorno() + "";
-        datosTabla[7] = c.gettEspera() + "";
+        
+        c.settFinal(tiempo);
+        datosTabla[4] = c.gettFinal() + "";
+        c.settRetorno(c.gettFinal() - c.gettLlegada());
+        datosTabla[5] = c.gettRetorno() + "";
+        c.settEspera(c.gettRetorno() - c.getRafagaEjecutada());
+        datosTabla[6] = c.gettEspera() + "";
         l.modificarProcesoTabla(datosTabla);
     }
 

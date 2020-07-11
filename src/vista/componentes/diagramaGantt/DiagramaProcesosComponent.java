@@ -23,7 +23,6 @@ public class DiagramaProcesosComponent {
     
     public void actualizar(){
         diagramaProcesosTemplate.avanceProceso();
-        diagramaProcesosTemplate.getlDiagrama().updateUI();
     }
 
     public LinkedList<Proceso> gProcesos(){

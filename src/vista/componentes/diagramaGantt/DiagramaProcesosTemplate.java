@@ -85,11 +85,11 @@ public class DiagramaProcesosTemplate extends JScrollPane {
         g.drawString(procesoActual.getNombre() + "", x, y + 15);
         x += 15;
 
-        for (i = 0; i < procesoActual.gettLlegada(); i++) {
+        for (i = 0; i < procesoActual.getTiempoLlegadaAux(); i++) {
             x += 20;
         }
 
-        for (i = procesoActual.gettLlegada(); i < procesoActual.gettComienzo(); i++) {
+        for (i = procesoActual.getTiempoLlegadaAux(); i < procesoActual.gettComienzo(); i++) {
             g.setColor(Color.LIGHT_GRAY);
             g.fillRect(x, y, 20, 20);
             g.setColor(Color.BLACK);
@@ -118,16 +118,13 @@ public class DiagramaProcesosTemplate extends JScrollPane {
 
     public void avanceProceso() {
         procesos.getLast().settFinal(procesos.getLast().gettFinal() + 1);
+        lDiagrama.updateUI();
     }
 
     private void calcularTamano() {
         int x = 100 + (procesos.getLast().gettFinal() *20);
         int y = 80 + (procesos.size()*20);
         lDiagrama.setPreferredSize(new Dimension(x, y));
-    }
-
-    public JLabel getlDiagrama() {
-        return lDiagrama;
     }
 
 }

@@ -23,7 +23,6 @@ public class BarraHerramientasTemplate extends JPanel {
     private JButton bCerrar;
     
     //Objetos decoradores
-    private Color colorFondo1;
     private Font fuenteTitulo;
     private ImageIcon iAux, iLogo, iCerrar;
     private Cursor cMano;
@@ -35,9 +34,9 @@ public class BarraHerramientasTemplate extends JPanel {
 
         iAux = new ImageIcon(iLogo.getImage().getScaledInstance(45, 45, Image.SCALE_AREA_AVERAGING));
         fuenteTitulo = new Font("Algerian", Font.BOLD, 20);
-        lTItulo = new JLabel("  Gestion de Procesos (SJF)");
+        lTItulo = new JLabel("  Gestion de Procesos (Round Robin)");
         lTItulo.setFont(fuenteTitulo);
-        lTItulo.setBounds(400, 0, 400 , 50);
+        lTItulo.setBounds(380, 0, 420 , 50);
         lTItulo.setForeground(Color.WHITE);
         lTItulo.setIcon(iAux);
         lTItulo.setHorizontalAlignment(SwingConstants.CENTER);

@@ -32,7 +32,7 @@ public class Logica {
         colaProcesosBloqueados = new ArrayList<>();
         colaProcesosGrafica = new ArrayList<>();
         vistaPrincipalComponent = new VistaPrincipalComponent(this);
-        procesador = new Procesador(this);
+        procesador = new Procesador(this, 4);
     }
 
     public void nuevosProcesos() {
@@ -41,16 +41,13 @@ public class Logica {
         for (int i = 0; i < n; i++) {
             Proceso c = new Proceso(generarNombre(), generarColor(), tiempo, generarRafaga(), generarPrioridad());
             System.out.println(c.getRafaga());
-            colaAux.add(c);
+            colaProcesos.add(c);
+            colaProcesosGrafica.add(c);
         }
         tiempo++;
 
         if (!procesador.isAlive()){
-            ordenarPorPrioridad(colaAux);
             procesador.start();
-        }
-        else {
-            ordenarPorPrioridad(colaAux);
         }
     }
 
@@ -115,9 +112,12 @@ public class Logica {
     }
 
     public void desbloquear() {
-        ArrayList<Proceso> colita = new ArrayList<>();
+        /* ArrayList<Proceso> colita = new ArrayList<>();
         colita.add(colaProcesosBloqueados.remove(0));
-        ordenarPorRafaga(colita);
+        ordenarPorRafaga(colita); */
+        Proceso p = colaProcesosBloqueados.remove(0);
+        colaProcesos.add(p);
+        colaProcesosGrafica.add(p);
         actualizarColaProcesos();
         actualizarColaProcesosBloqueados();
     }
@@ -172,7 +172,7 @@ public class Logica {
         vistaPrincipalComponent.actualizarDiagrama();
     }
 
-    public boolean verificarEstadoProceso(){
+    public boolean estaBloqueado(){
         return bloqueado;
     }
 
