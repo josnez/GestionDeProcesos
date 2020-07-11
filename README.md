@@ -1,4 +1,4 @@
-# Gestion de Proyectos - Algoritmo 1
+# Gestion de Proyectos
 
 ## Nicolas Andrade - Josue Nuñez
 
