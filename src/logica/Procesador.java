@@ -51,7 +51,7 @@ public class Procesador extends Thread {
         String[] datosTabla = new String[7];
 
         datosTabla[0] = c.getNombre() + "";
-        datosTabla[1] = c.getTiempoLlegadaAux() + "";
+        datosTabla[1] = c.gettLlegada() + "";
         datosTabla[2] = c.getRafaga() + "";
 
         c.settComienzo(tiempo);
@@ -71,7 +71,7 @@ public class Procesador extends Thread {
         if (c.getRafaga()>=4) {
             for (i = 1; i <= quantum; i++) {
                 if(l.estaBloqueado()){
-                    c.settLlegadaAux(c.getTiempoLlegadaAux()+i-1);
+                    //c.settLlegadaAux(c.getTiempoLlegadaAux()+1);
                     l.getColaProcesosBloqueados().add(c);                    
                     l.actualizarColaProcesosBloqueados();
                     return;
@@ -90,9 +90,9 @@ public class Procesador extends Thread {
             int rafaga = c.getRafaga();
             for (i = 1; i <= rafaga; i++) {
                 if(l.estaBloqueado()){
-                    c.settLlegadaAux(c.getTiempoLlegadaAux()+i-1);
+                    //c.settLlegadaAux(c.getTiempoLlegadaAux()+1);
                     l.getColaProcesosBloqueados().add(c);
-                    l.setBloqueado(false);
+                    //l.setBloqueado(false);
                     l.actualizarColaProcesosBloqueados();
                     return;
                 }
