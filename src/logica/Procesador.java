@@ -71,14 +71,14 @@ public class Procesador extends Thread {
         if (c.getRafaga()>=4) {
             for (i = 1; i <= quantum; i++) {
                 if(l.estaBloqueado()){
-                    //c.settLlegadaAux(c.getTiempoLlegadaAux()+1);
+                    c.settLlegadaAux(tiempo);                
                     l.getColaProcesosBloqueados().add(c);                    
                     l.actualizarColaProcesosBloqueados();
                     return;
                 }
+                tiempo++;
                 c.settRafaga(c.getRafaga()-1);
                 c.settRafagaEjecutada(c.getRafagaEjecutada()+1);
-                tiempo++;
                 try {
                     l.avanceProceso();
                     sleep(1000);
@@ -90,9 +90,8 @@ public class Procesador extends Thread {
             int rafaga = c.getRafaga();
             for (i = 1; i <= rafaga; i++) {
                 if(l.estaBloqueado()){
-                    //c.settLlegadaAux(c.getTiempoLlegadaAux()+1);
+                    c.settLlegadaAux(c.getTiempoLlegadaAux()+i);
                     l.getColaProcesosBloqueados().add(c);
-                    //l.setBloqueado(false);
                     l.actualizarColaProcesosBloqueados();
                     return;
                 }
