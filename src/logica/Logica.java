@@ -41,13 +41,16 @@ public class Logica {
         for (int i = 0; i < n; i++) {
             Proceso c = new Proceso(generarNombre(), generarColor(), tiempo, generarRafaga(), generarPrioridad());
             System.out.println(c.getRafaga());
-            colaProcesos.add(c);
-            colaProcesosGrafica.add(c);
+            colaAux.add(c);
         }
         tiempo++;
 
         if (!procesador.isAlive()){
+            ordenarPorRafaga(colaAux);
             procesador.start();
+        }
+        else {
+            ordenarPorRafaga(colaAux);
         }
     }
 
