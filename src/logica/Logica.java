@@ -54,7 +54,7 @@ public class Logica {
         }
     }
 
-    private void ordenarPorRafaga(ArrayList<Proceso> colaAux) {
+    public void ordenarPorRafaga(ArrayList<Proceso> colaAux) {
         for (Proceso proceso : colaProcesos) {
             colaAux.add(proceso);
         }
@@ -115,18 +115,11 @@ public class Logica {
     }
 
     public void desbloquear() {
-        /* ArrayList<Proceso> colita = new ArrayList<>();
+        ArrayList<Proceso> colita = new ArrayList<>();
         colita.add(colaProcesosBloqueados.remove(0));
-        ordenarPorRafaga(colita); */
-        Proceso p = colaProcesosBloqueados.remove(0);
-        colaProcesos.add(p);
-        colaProcesosGrafica.add(p);
+        ordenarPorRafaga(colita);
         actualizarColaProcesos();
         actualizarColaProcesosBloqueados();
-    }
-    
-    private int generarTiempo() {
-        return (int) Math.floor(Math.random() * (tiempoFinal - tiempoInicial + 1) + tiempoFinal);
     }
 
     private int generarPrioridad() {
@@ -149,6 +142,10 @@ public class Logica {
         float b = rand.nextFloat();
         Color c = new Color(r, g, b);
         return c;
+    }
+
+    public int rafagaMasCorta(){
+        return colaProcesos.peek().getRafaga();
     }
 
     public void actualizarColaProcesos() {

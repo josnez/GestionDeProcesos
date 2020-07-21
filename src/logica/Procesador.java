@@ -1,5 +1,6 @@
 package logica;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -7,13 +8,12 @@ import java.util.Queue;
 public class Procesador extends Thread {
 
     private Logica l;
-    private int quantum, tiempo;
+    private int tiempo;
     private Queue<Proceso> procesos;
 
     public Procesador(Logica log, int quantum) {
         super("Procesaminto");
         this.l = log;
-        this.quantum = quantum;
         tiempo = 0;
         procesos = new LinkedList<>();
     }
@@ -29,14 +29,6 @@ public class Procesador extends Thread {
             l.getColaProcesosGrafica().remove(0);
             l.actualizarColaProcesos();
             seccionCritica(c);
-            if (c.getRafaga() > 0 && !l.estaBloqueado()) {
-                c.settLlegadaAux(c.gettFinal());
-                l.getColaProcesos().add(c);
-                l.getColaProcesosGrafica().add(c);
-                l.actualizarColaProcesos();
-            } else {
-                l.setBloqueado(false);
-            }
             obtenerProcesos();
         }
         try {
@@ -72,8 +64,18 @@ public class Procesador extends Thread {
                 c.settLlegadaAux(tiempo);
                 l.getColaProcesosBloqueados().add(c);
                 l.actualizarColaProcesosBloqueados();
+                l.setBloqueado(false);
                 return;
             }
+            if(!l.getColaProcesos().isEmpty() && l.rafagaMasCorta()<c.getRafaga()){
+                ArrayList<Proceso> aux = new ArrayList<>();
+                c.settLlegadaAux(c.gettFinal()+i);
+                aux.add(c);
+                l.ordenarPorRafaga(aux);
+                l.actualizarColaProcesos();
+                return;
+            }
+
             tiempo++;
             c.settRafaga(c.getRafaga() - 1);
             c.settRafagaEjecutada(c.getRafagaEjecutada() + 1);

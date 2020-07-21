@@ -9,7 +9,6 @@ import vista.componentes.tablaProcesos.TablaProcesosComponent;
 
 public class VistaPrincipalComponent {
     
-    private Logica logica;
     private VistaPrincipalTemplate vistaPrincipalTemplate;
     private BarraHerramientasComponent barraHerramientasComponent;
     private ProcesosEnColaComponent procesosEnColaComponent;
@@ -18,7 +17,6 @@ public class VistaPrincipalComponent {
 
     public VistaPrincipalComponent(Logica logica){
 
-        this.logica = logica;
         vistaPrincipalTemplate = new VistaPrincipalTemplate();
         barraHerramientasComponent = new BarraHerramientasComponent();
         vistaPrincipalTemplate.getpBarraHerramientas().add(barraHerramientasComponent.gBarraHerramientasTemplate());
