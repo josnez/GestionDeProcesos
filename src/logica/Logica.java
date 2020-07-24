@@ -19,13 +19,14 @@ public class Logica {
     private VistaPrincipalComponent vistaPrincipalComponent;
     private Procesador procesador;
 
-    private int tiempoInicial, tiempoFinal, tiempo;
+    private int tiempoInicial, tiempoFinal, tiempo, numeroN;
     private boolean bloqueado;
 
     public Logica() {
 
         bloqueado = false;
         tiempo = 0;
+        numeroN = 0;
         tiempoInicial = 0;
         tiempoFinal = 3;
         colaProcesos = new LinkedList<>();
@@ -39,8 +40,9 @@ public class Logica {
         int n = (int) Math.floor(Math.random() * 5 + 1);
         ArrayList<Proceso> colaAux = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            Proceso c = new Proceso(generarNombre(), generarColor(), tiempo, generarRafaga(), generarPrioridad());
+            Proceso c = new Proceso(generarNombre()+numeroN, generarColor(), tiempo, generarRafaga(), generarPrioridad());
             System.out.println(c.getRafaga());
+            numeroN++;
             colaAux.add(c);
         }
         tiempo++;
@@ -126,9 +128,9 @@ public class Logica {
         return (int) Math.floor(Math.random() * 4 + 1);
     }
 
-    private char generarNombre() {
+    private String generarNombre() {
         int n = (int) Math.floor(Math.random() * (90 - 64 + 1) + 64);
-        return (char) n;
+        return ""+(char) n;
     }
 
     private int generarRafaga() {

@@ -82,7 +82,7 @@ public class DiagramaProcesosTemplate extends JScrollPane {
     private void dibujarProceso(Graphics g, Proceso procesoActual, int x, int y) {
         int i;
         g.setColor(Color.BLACK);
-        g.drawString(procesoActual.getNombre() + "", x, y + 15);
+        g.drawString(procesoActual.getNombre() + "", x-10, y + 15);
         x += 15;
 
         for (i = 0; i < procesoActual.getTiempoLlegadaAux(); i++) {

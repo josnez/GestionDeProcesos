@@ -4,11 +4,11 @@ import java.awt.Color;
 
 public class Proceso implements Cloneable {
     
-    private char nombre;
+    private String nombre;
     private int tLlegada, tLlegadaAux, rafaga, rafagaEjecutada, tComienzo, tFinal, tRetorno, tEspera, prioridad;
     private Color color;
     
-    public Proceso(char nombre, Color color, int tLlegada, int rafaga, int prioridad){
+    public Proceso(String nombre, Color color, int tLlegada, int rafaga, int prioridad){
         this.nombre = nombre;
         this.color = color;
         this.tLlegada = tLlegada;
@@ -22,7 +22,7 @@ public class Proceso implements Cloneable {
         return super.clone(); 
     } 
 
-    public char getNombre() {
+    public String getNombre() {
         return nombre;
     }
 
