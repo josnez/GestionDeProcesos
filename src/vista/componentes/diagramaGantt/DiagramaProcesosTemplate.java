@@ -49,7 +49,7 @@ public class DiagramaProcesosTemplate extends JScrollPane {
         this.setViewportView(lDiagrama);
         this.setBorder(BorderFactory.createTitledBorder(borderT, "Diagrama de Gantt", SwingConstants.LEFT, 0, fuente,
                 Color.WHITE));
-        this.setSize(1200, 275);
+        this.setSize(1300, 275);
     }
 
     private void dibujar(Graphics g) {

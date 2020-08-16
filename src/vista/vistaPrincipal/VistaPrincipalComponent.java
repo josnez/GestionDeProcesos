@@ -18,7 +18,7 @@ public class VistaPrincipalComponent {
     public VistaPrincipalComponent(Logica logica){
 
         vistaPrincipalTemplate = new VistaPrincipalTemplate();
-        barraHerramientasComponent = new BarraHerramientasComponent();
+        barraHerramientasComponent = new BarraHerramientasComponent(this);
         vistaPrincipalTemplate.getpBarraHerramientas().add(barraHerramientasComponent.gBarraHerramientasTemplate());
         procesosEnColaComponent = new ProcesosEnColaComponent(logica);
         vistaPrincipalTemplate.getpColaProcesos().add(procesosEnColaComponent.gProcesosEnColaTemplate());
@@ -57,4 +57,8 @@ public class VistaPrincipalComponent {
     public VistaPrincipalTemplate gVistaPrincipalTemplate(){
         return vistaPrincipalTemplate;
     }
+
+	public void moverFrame(int i, int j) {
+        vistaPrincipalTemplate.setLocation(i, j);
+	}
 }

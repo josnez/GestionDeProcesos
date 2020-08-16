@@ -18,7 +18,7 @@ public class VistaPrincipalTemplate extends JFrame {
 
         crearJPanels();
 
-        this.setSize(1200, 700);
+        this.setSize(1350, 720);
         this.setLayout(null);
         this.setUndecorated(true);
         this.getContentPane().setBackground(new Color(50, 50, 51));
@@ -29,24 +29,24 @@ public class VistaPrincipalTemplate extends JFrame {
     private void crearJPanels() {
 
         pBarraHerramientas = new JPanel();
-        pBarraHerramientas.setBounds(0, 0, 1200, 50);
+        pBarraHerramientas.setBounds(0, 0, 1350, 50);
         pBarraHerramientas.setLayout(null);
         this.add(pBarraHerramientas);
 
         pColaProcesos = new JPanel();
-        pColaProcesos.setBounds(0, 50, 1200, 100);
+        pColaProcesos.setBounds(0, 50, 1350, 100);
         pColaProcesos.setLayout(null);
         pColaProcesos.setBackground(null);
         this.add(pColaProcesos);
 
         pTabla = new JPanel();
-        pTabla.setBounds(0, 150, 1200, 275);
+        pTabla.setBounds(25, 150, 1300, 275);
         pTabla.setLayout(null);
         pTabla.setBackground(null);
         this.add(pTabla);
 
         pDiagrama = new JPanel();
-        pDiagrama.setBounds(0, 425, 1200, 275);
+        pDiagrama.setBounds(25, 425, 1300, 275);
         pDiagrama.setLayout(null);
         pDiagrama.setBackground(null);
         this.add(pDiagrama);

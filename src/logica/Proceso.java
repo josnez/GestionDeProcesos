@@ -5,7 +5,7 @@ import java.awt.Color;
 public class Proceso implements Cloneable {
     
     private String nombre;
-    private int tLlegada, tLlegadaAux, rafaga, rafagaEjecutada, tComienzo, tFinal, tRetorno, tEspera, prioridad;
+    private int tLlegada, tLlegadaAux, rafaga, rafagaEjecutada, tComienzo, tFinal, tRetorno, tEspera, prioridad, envejecimiento;
     private Color color;
     
     public Proceso(String nombre, Color color, int tLlegada, int rafaga, int prioridad){
@@ -16,6 +16,7 @@ public class Proceso implements Cloneable {
         this.rafaga = rafaga;
         this.prioridad = prioridad;
         this.rafagaEjecutada = 0;
+        this.envejecimiento = 0;
     }
 
     public Object clone() throws CloneNotSupportedException  { 
@@ -93,4 +94,14 @@ public class Proceso implements Cloneable {
     public void settLlegadaAux(int tLlegadaAux) {
         this.tLlegadaAux = tLlegadaAux;
     }
+
+    public int getEnvejecimiento() {
+        return envejecimiento;
+    }
+
+    public void setEnvejecimiento(int envejecimiento) {
+        this.envejecimiento = envejecimiento;
+    }
+
+
 }

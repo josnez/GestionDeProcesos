@@ -9,21 +9,23 @@ public class Procesador extends Thread {
 
     private Logica l;
     private int tiempo;
-    private Queue<Proceso> procesos;
+    private Queue<Proceso> procesosRoundRobin, procesosMenorRafaga, procesosFIFO;
 
     public Procesador(Logica log, int quantum) {
         super("Procesaminto");
         this.l = log;
         tiempo = 0;
-        procesos = new LinkedList<>();
+        procesosRoundRobin = new LinkedList<>();
+        procesosMenorRafaga = new LinkedList<>();
     }
 
     private void administrarProcesos() {
 
         System.out.print("");
+        //Atencion a procesos de round robin
         obtenerProcesos();
-        while (!procesos.isEmpty()) {
-            Proceso c = procesos.poll();
+        while (!procesosRoundRobin.isEmpty()) {
+            Proceso c = procesosRoundRobin.poll();
             l.getColaProcesos().poll();
             // Auxiliar para dibujar
             l.getColaProcesosGrafica().remove(0);
@@ -31,11 +33,28 @@ public class Procesador extends Thread {
             seccionCritica(c);
             obtenerProcesos();
         }
+
+        //Atencion a procesos de menor rafaga
+        while (!procesosMenorRafaga.isEmpty()) {
+            if (!procesosRoundRobin.isEmpty()) {
+                break;
+            }
+            Proceso c = procesosMenorRafaga.poll();
+            l.getColaProcesos().poll();
+            // Auxiliar para dibujar
+            l.getColaProcesosGrafica().remove(0);
+            l.actualizarColaProcesos();
+            seccionCriticaMenorRafaga(c);
+            obtenerProcesos();
+        }
         try {
             sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private void seccionCriticaMenorRafaga(Proceso c) {
     }
 
     public void seccionCritica(Proceso c) {
@@ -98,9 +117,9 @@ public class Procesador extends Thread {
 
     public void obtenerProcesos() {
         Iterator<Proceso> iT = l.getColaProcesos().iterator();
-        this.procesos.clear();
+        this.procesosRoundRobin.clear();
         while (iT.hasNext()) {
-            this.procesos.add((Proceso) iT.next());
+            this.procesosRoundRobin.add((Proceso) iT.next());
         }
     }
 
