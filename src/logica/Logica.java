@@ -53,7 +53,6 @@ public class Logica {
             colProRoundRobin.add(c);
             colProGraRoundRobin.add(c);
         }
-        tiempo++;
 
         if (!procesador.isAlive()) {
             procesador.start();
@@ -76,7 +75,6 @@ public class Logica {
                     colaAux.add(c);
                     numeroN++;
                 }
-                tiempo++;
 
                 if (!procesador.isAlive()) {
                     ordenarPorRafaga(colaAux);
@@ -134,7 +132,6 @@ public class Logica {
                     colProFIFO.add(c);
                     colProGraFIFO.add(c);
                 }
-                tiempo++;
 
                 if (!procesador.isAlive()) {
                     procesador.start();
@@ -214,8 +211,8 @@ public class Logica {
         vistaPrincipalComponent.modificarTablaProceso(datosTabla);
     }
 
-    public void procesoEnEjecucion(Proceso p) {
-        vistaPrincipalComponent.procesoEnEjecucion(p);
+    public void procesoEnEjecucion(Proceso p, String cola) {
+        vistaPrincipalComponent.procesoEnEjecucion(p, cola);
     }
 
     public void avanceProceso() {
@@ -228,6 +225,14 @@ public class Logica {
 
     public boolean estaAgregando() {
         return agregando;
+    }
+
+    public void aumentaTiempo() {
+        this.tiempo++;
+    }
+
+    public int getTiempo() {
+        return tiempo;
     }
 
     public int getTiempoInicial() {
@@ -277,5 +282,9 @@ public class Logica {
     public ArrayList<Proceso> getColProGraFIFO() {
         return colProGraFIFO;
     }
+
+	public void seVacio() {
+        vistaPrincipalComponent.seVacio();
+	}
 
 }

@@ -12,7 +12,7 @@ public class VistaPrincipalTemplate extends JFrame {
      */
     private static final long serialVersionUID = 1L;
 
-    private JPanel pBarraHerramientas, pColaProcesos, pTabla, pDiagrama;
+    private JPanel pBarraHerramientas, pColaProcesos, pTabla, pDiagrama, pSeccionCritica;
     
     public VistaPrincipalTemplate(){
 
@@ -40,7 +40,7 @@ public class VistaPrincipalTemplate extends JFrame {
         this.add(pColaProcesos);
 
         pTabla = new JPanel();
-        pTabla.setBounds(25, 150, 1300, 275);
+        pTabla.setBounds(230, 150, 1100, 275);
         pTabla.setLayout(null);
         pTabla.setBackground(null);
         this.add(pTabla);
@@ -50,6 +50,12 @@ public class VistaPrincipalTemplate extends JFrame {
         pDiagrama.setLayout(null);
         pDiagrama.setBackground(null);
         this.add(pDiagrama);
+
+        pSeccionCritica = new JPanel();
+        pSeccionCritica.setBounds(20, 188, 200, 200);
+        pSeccionCritica.setLayout(null);
+        pSeccionCritica.setBackground(null);
+        this.add(pSeccionCritica);
     }
 
     public JPanel getpBarraHerramientas() {
@@ -66,6 +72,10 @@ public class VistaPrincipalTemplate extends JFrame {
 
     public JPanel getpDiagrama() {
         return pDiagrama;
+    }
+
+    public JPanel getpSeccionCritica() {
+        return pSeccionCritica;
     }
     
 }

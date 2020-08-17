@@ -96,7 +96,7 @@ public class ProcesosEnColaTemplate extends JPanel {
         if (anchura == 0)
             return;
         y = 52;
-        x = (anchura * 115) + 10;
+        x = (anchura * 98) + 7;
         iterador = 0;
         lProcesosBloqueados.setPreferredSize(new Dimension(x, y));
         grph.setColor(new Color(50, 50, 51));
@@ -113,17 +113,17 @@ public class ProcesosEnColaTemplate extends JPanel {
             proceso = procesosBloqueados.get(iterador);
 
             grph.setColor(colorAzul);
-            grph.fillRect(x - 2, y - 2, 93, 54);
+            grph.fillRect(x - 2, y - 2, 92, 54);
 
             grph.setColor(proceso.getColor());
-            grph.fillRect(x, y, 90, 50);
+            grph.fillRect(x, y, 88, 50);
 
             grph.setColor(Color.WHITE);
-            grph.drawString("Proceso " + proceso.getNombre(), x + 10, y + 15);
-            grph.drawString("Rafaga: " + proceso.getRafaga(), x + 10, y + 30);
-            grph.drawString("T. llegada: " + proceso.gettLlegada(), x + 10, y + 45);
+            grph.drawString("Proceso " + proceso.getNombre(), x + 5, y + 15);
+            grph.drawString("Rafaga: " + proceso.getRafaga(), x + 5, y + 30);
+            grph.drawString("Enveje: " + proceso.getEnvejecimiento(), x + 5, y + 45);
             iterador++;
-            x += 90;
+            x += 98;
         }
         scrollProcesosBloqueados.doLayout();
     }
@@ -159,7 +159,7 @@ public class ProcesosEnColaTemplate extends JPanel {
         if (anchura == 0)
             return;
         y = 52;
-        x = (anchura * 115) + 10;
+        x = (anchura * 98) + 7;
         iterador = 0;
         lProcesosFIFO.setPreferredSize(new Dimension(x, y));
         g2d.setColor(new Color(50, 50, 51));
@@ -176,17 +176,17 @@ public class ProcesosEnColaTemplate extends JPanel {
             proceso = procesosFIFO.get(iterador);
 
             g2d.setColor(colorAzul);
-            g2d.fillRect(x - 2, y - 2, 94, 54);
+            g2d.fillRect(x - 2, y - 2, 92, 54);
 
             g2d.setColor(proceso.getColor());
-            g2d.fillRect(x, y, 90, 50);
+            g2d.fillRect(x, y, 88, 50);
 
             g2d.setColor(Color.WHITE);
-            g2d.drawString("Proceso " + proceso.getNombre(), x + 10, y + 15);
-            g2d.drawString("Rafaga: " + proceso.getRafaga(), x + 10, y + 30);
-            g2d.drawString("Enveje: " + proceso.getEnvejecimiento(), x + 10, y + 45);
+            g2d.drawString("Proceso " + proceso.getNombre(), x + 5, y + 15);
+            g2d.drawString("Rafaga: " + proceso.getRafaga(), x + 5, y + 30);
+            g2d.drawString("Enveje: " + proceso.getEnvejecimiento(), x + 5, y + 45);
             iterador++;
-            x += 100;
+            x += 98;
         }
         scrollColaFIFO.doLayout();
     }
@@ -221,16 +221,17 @@ public class ProcesosEnColaTemplate extends JPanel {
         int anchura = procesosMenorRafaga.size();
         if (anchura == 0)
             return;
-        y = 55;
-        x = (anchura * 115) + 10;
+        y = 52;
+        x = (anchura * 98) + 7;
         iterador = 0;
         lProcesosMenorRafaga.setPreferredSize(new Dimension(x, y));
         g2d.setColor(new Color(50, 50, 51));
         g2d.fillRect(0, 0, x, y);
         x = 10;
-        y = 3;
+        y = 2;
         iT = procesosMenorRafaga.iterator();
         Proceso proceso;
+
         while (iT.hasNext()) {
             if (iterador == procesosMenorRafaga.size())
                 break;
@@ -238,17 +239,17 @@ public class ProcesosEnColaTemplate extends JPanel {
             proceso = procesosMenorRafaga.get(iterador);
 
             g2d.setColor(colorAzul);
-            g2d.fillRect(x - 2, y - 2, 109, 59);
+            g2d.fillRect(x - 2, y - 2, 92, 54);
 
             g2d.setColor(proceso.getColor());
-            g2d.fillRect(x, y, 105, 55);
+            g2d.fillRect(x, y, 88, 50);
 
             g2d.setColor(Color.WHITE);
-            g2d.drawString("Proceso " + proceso.getNombre(), x + 10, y + 15);
-            g2d.drawString("Rafaga: " + proceso.getRafaga(), x + 10, y + 30);
-            g2d.drawString("Enve: " + proceso.getEnvejecimiento(), x + 10, y + 45);
+            g2d.drawString("Proceso " + proceso.getNombre(), x + 5, y + 15);
+            g2d.drawString("Rafaga: " + proceso.getRafaga(), x + 5, y + 30);
+            g2d.drawString("Enveje: " + proceso.getEnvejecimiento(), x + 5, y + 45);
             iterador++;
-            x += 115;
+            x += 98;
         }
         scrollColaMenorRafaga.doLayout();
     }
@@ -285,16 +286,17 @@ public class ProcesosEnColaTemplate extends JPanel {
         int anchura = procesosRoundRobin.size();
         if (anchura == 0)
             return;
-        y = 55;
-        x = (anchura * 115) + 10;
+        y = 52;
+        x = (anchura * 98) + 7;
         iterador = 0;
         lProcesosRoundRobin.setPreferredSize(new Dimension(x, y));
         grph.setColor(new Color(50, 50, 51));
         grph.fillRect(0, 0, x, y);
         x = 10;
-        y = 3;
+        y = 2;
         iT = procesosRoundRobin.iterator();
         Proceso proceso;
+
         while (iT.hasNext()) {
             if (iterador == procesosRoundRobin.size())
                 break;
@@ -302,17 +304,17 @@ public class ProcesosEnColaTemplate extends JPanel {
             proceso = procesosRoundRobin.get(iterador);
 
             grph.setColor(colorAzul);
-            grph.fillRect(x - 2, y - 2, 109, 59);
+            grph.fillRect(x - 2, y - 2, 92, 54);
 
             grph.setColor(proceso.getColor());
-            grph.fillRect(x, y, 105, 55);
+            grph.fillRect(x, y, 88, 50);
 
             grph.setColor(Color.WHITE);
-            grph.drawString("Proceso " + proceso.getNombre(), x + 10, y + 15);
-            grph.drawString("Rafaga: " + proceso.getRafaga(), x + 10, y + 30);
-            grph.drawString("T. llegada: " + proceso.gettLlegada(), x + 10, y + 45);
+            grph.drawString("Proceso " + proceso.getNombre(), x + 5, y + 15);
+            grph.drawString("Rafaga: " + proceso.getRafaga(), x + 5, y + 30);
+            grph.drawString("Enveje: " + proceso.getEnvejecimiento(), x + 5, y + 45);
             iterador++;
-            x += 115;
+            x += 98;
         }
         scrollProcesosRoundRobin.doLayout();
     }
@@ -341,9 +343,11 @@ public class ProcesosEnColaTemplate extends JPanel {
         bAddProcesos.setContentAreaFilled(false);
         bAddProcesos.addMouseListener(procesosEnColaComponent);
         bAddProcesos.setFont(fuente);
+        iAux = new ImageIcon(iAnadir.getImage().getScaledInstance(20, 20, Image.SCALE_AREA_AVERAGING));
+        bAddProcesos.setIcon(iAux);
         bAddProcesos.setForeground(Color.WHITE);
         bAddProcesos.setBackground(null);
-        bAddProcesos.setBorder(borderT);
+        bAddProcesos.setBorder(null);
         bAddProcesos.setCursor(cMano);
         this.add(bAddProcesos);
 

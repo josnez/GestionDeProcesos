@@ -103,7 +103,7 @@ public class Procesador extends Thread {
         l.anadirProcesoTabla(datosTabla);
         int i;
         c.settFinal(tiempo);
-        l.procesoEnEjecucion(c);
+        l.procesoEnEjecucion(c, "Round Robin");
         if (c.getRafaga() >= 4) {
             for (i = 1; i <= quantum; i++) {
                 if (l.estaBloqueado()) {
@@ -114,6 +114,7 @@ public class Procesador extends Thread {
                     return;
                 }
                 tiempo++;
+                l.aumentaTiempo();
                 c.settRafaga(c.getRafaga() - 1);
                 c.settRafagaEjecutada(c.getRafagaEjecutada() + 1);
                 try {
@@ -135,7 +136,7 @@ public class Procesador extends Thread {
                 }
                 c.settRafaga(c.getRafaga() - 1);
                 c.settRafagaEjecutada(c.getRafagaEjecutada() + 1);
-                tiempo++;
+                tiempo++;l.aumentaTiempo();
                 try {
                     l.avanceProceso();
                     envejecimientoPrioridad1();
@@ -258,7 +259,7 @@ public class Procesador extends Thread {
         l.anadirProcesoTabla(datosTabla);
         int i, rafaga = c.getRafaga();
         c.settFinal(tiempo);
-        l.procesoEnEjecucion(c);
+        l.procesoEnEjecucion(c, "Menor Rafaga");
         for (i = 1; i <= rafaga; i++) {
             if (l.estaBloqueado()) {
                 c.settLlegadaAux(tiempo);
@@ -268,7 +269,7 @@ public class Procesador extends Thread {
                 l.setBloqueado(false);
                 return;
             }
-            tiempo++;
+            tiempo++;l.aumentaTiempo();
             c.settRafaga(c.getRafaga() - 1);
             c.settRafagaEjecutada(c.getRafagaEjecutada() + 1);
             try {
@@ -355,7 +356,7 @@ public class Procesador extends Thread {
         l.anadirProcesoTabla(datosTabla);
         int i, rafaga = c.getRafaga();
         c.settFinal(tiempo);
-        l.procesoEnEjecucion(c);
+        l.procesoEnEjecucion(c, "FIFO");
         for (i = 1; i <= rafaga; i++) {
             if (l.estaBloqueado()) {
                 c.settLlegadaAux(tiempo);
@@ -365,7 +366,7 @@ public class Procesador extends Thread {
                 l.setBloqueado(false);
                 return;
             }
-            tiempo++;
+            tiempo++;l.aumentaTiempo();
             c.settRafaga(c.getRafaga() - 1);
             c.settRafagaEjecutada(c.getRafagaEjecutada() + 1);
             try {
@@ -408,6 +409,7 @@ public class Procesador extends Thread {
     public void run() {
         while (true) {
             administrarProcesos();
+            l.seVacio();
         }
     }
 

@@ -30,7 +30,7 @@ public class TablaProcesosTemplate extends JScrollPane {
         borderT = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY);
 
         tabla = new JTable();
-        tabla.setBounds(0, 0, 1300, 275);
+        tabla.setBounds(0, 0, 1100, 275);
         tabla.getTableHeader().setFont(new Font("Comic Sans MS", Font.BOLD, 15));
         tabla.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
         tabla.setShowGrid(false);
@@ -50,7 +50,7 @@ public class TablaProcesosTemplate extends JScrollPane {
 
         this.setBorder(BorderFactory.createTitledBorder(borderT, "Tabla de datos", SwingConstants.LEFT, 0, fuente, Color.WHITE));
         this.setViewportView(tabla);
-        this.setSize(1300, 275);
+        this.setSize(1100, 275);
         this.setBackground(null);
     }
 

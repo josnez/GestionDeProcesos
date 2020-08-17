@@ -67,24 +67,24 @@ public class ProcesosEnColaComponent implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent arg0) {
-        /* if (arg0.getSource() == procesosEnColaTemplate.getbAddColMenorRagafa() ||
+        if (arg0.getSource() == procesosEnColaTemplate.getbAddColMenorRagafa() ||
             arg0.getSource() == procesosEnColaTemplate.getbAddColFIFO() ||
             arg0.getSource() == procesosEnColaTemplate.getbAddProcesos()) {
             procesosEnColaTemplate.botonAnadir2((JButton) arg0.getSource());
         } else if (arg0.getSource() == procesosEnColaTemplate.getbColaBloqueados()) {
             procesosEnColaTemplate.botonPasarPestana2(pes);
-        } */
+        }
     }
 
     @Override
     public void mouseExited(MouseEvent arg0) {
-        /* if (arg0.getSource() == procesosEnColaTemplate.getbAddColMenorRagafa() ||
+        if (arg0.getSource() == procesosEnColaTemplate.getbAddColMenorRagafa() ||
             arg0.getSource() == procesosEnColaTemplate.getbAddColFIFO() ||
             arg0.getSource() == procesosEnColaTemplate.getbAddProcesos()) {
             procesosEnColaTemplate.botonAnadir((JButton) arg0.getSource());
         } else if (arg0.getSource() == procesosEnColaTemplate.getbColaBloqueados()) {
             procesosEnColaTemplate.botonPasarPestana(pes);
-        } */
+        }
     }
 
     @Override

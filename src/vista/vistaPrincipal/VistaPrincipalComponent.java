@@ -6,6 +6,7 @@ import vista.componentes.barraHerramientas.BarraHerramientasComponent;
 import vista.componentes.diagramaGantt.DiagramaProcesosComponent;
 import vista.componentes.panelProcesosEnCola.ProcesosEnColaComponent;
 import vista.componentes.tablaProcesos.TablaProcesosComponent;
+import vista.seccionCritica.SeccionCriticaComponent;
 
 public class VistaPrincipalComponent {
     
@@ -14,6 +15,7 @@ public class VistaPrincipalComponent {
     private ProcesosEnColaComponent procesosEnColaComponent;
     private TablaProcesosComponent tablaProcesosComponent;
     private DiagramaProcesosComponent diagramaProcesosComponent;
+    private SeccionCriticaComponent seccionCriticaComponent;
 
     public VistaPrincipalComponent(Logica logica){
 
@@ -26,6 +28,8 @@ public class VistaPrincipalComponent {
         vistaPrincipalTemplate.getpTabla().add(tablaProcesosComponent.gTablaProcesosTemplate());
         diagramaProcesosComponent = new DiagramaProcesosComponent();
         vistaPrincipalTemplate.getpDiagrama().add(diagramaProcesosComponent.gDiagramaProcesosTemplate());
+        seccionCriticaComponent = new SeccionCriticaComponent();
+        vistaPrincipalTemplate.getpSeccionCritica().add(seccionCriticaComponent.gSeccionCriticaTemplate());
         vistaPrincipalTemplate.repaint();
     }
 
@@ -39,6 +43,7 @@ public class VistaPrincipalComponent {
 
     public void actualizarDiagrama(){
         diagramaProcesosComponent.actualizar();
+        seccionCriticaComponent.avanzaProceso();
     }
 
     public void anadirProcesoTabla(String[] proceso) {
@@ -49,8 +54,9 @@ public class VistaPrincipalComponent {
         tablaProcesosComponent.modificarProceso(datosTabla);
 	}
 
-    public void procesoEnEjecucion(Proceso p){
+    public void procesoEnEjecucion(Proceso p, String cola){
         diagramaProcesosComponent.addProceso(p);
+        seccionCriticaComponent.entraProceso(p, cola);
     }
 
 
@@ -60,5 +66,9 @@ public class VistaPrincipalComponent {
 
 	public void moverFrame(int i, int j) {
         vistaPrincipalTemplate.setLocation(i, j);
+	}
+
+	public void seVacio() {
+        seccionCriticaComponent.seVacio();
 	}
 }
