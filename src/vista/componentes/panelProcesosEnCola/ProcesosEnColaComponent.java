@@ -1,7 +1,5 @@
 package vista.componentes.panelProcesosEnCola;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -9,7 +7,7 @@ import javax.swing.JButton;
 
 import logica.Logica;
 
-public class ProcesosEnColaComponent implements ActionListener, MouseListener {
+public class ProcesosEnColaComponent implements MouseListener {
 
     private ProcesosEnColaTemplate procesosEnColaTemplate;
     private Logica logica;
@@ -39,26 +37,13 @@ public class ProcesosEnColaComponent implements ActionListener, MouseListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void mouseClicked(MouseEvent arg0) {
 
-        if (e.getSource() == procesosEnColaTemplate.getbAddProcesos()) {
+        if (arg0.getSource() == procesosEnColaTemplate.getbAddProcesos()) {
 
             logica.nuevosProcesosRoundRobin();
             procesosEnColaTemplate.getScrollProcesosRoundRobin().repaint();
-        } else if (e.getSource() == procesosEnColaTemplate.getbBloqueados()) {
-            logica.setBloqueado(true);
-        } else if (e.getSource() == procesosEnColaTemplate.getbDesbloquear()) {
-            logica.desbloquear();
-        } else if (e.getSource() == procesosEnColaTemplate.getbColaBloqueados()) {
-            pes = !pes;
-            procesosEnColaTemplate.cambiarVista();
-        }
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent arg0) {
-
-        if (arg0.getSource() == procesosEnColaTemplate.getbAddColMenorRagafa()) {
+        } else if (arg0.getSource() == procesosEnColaTemplate.getbAddColMenorRagafa()) {
 
             logica.nuevosProcesosMenorRafaga();
             procesosEnColaTemplate.getScrollColaMenorRafaga().repaint();
@@ -66,28 +51,40 @@ public class ProcesosEnColaComponent implements ActionListener, MouseListener {
 
             logica.nuevosProcesosFIFO();
             procesosEnColaTemplate.getScrollColaFIFO().repaint();
+        } else if (arg0.getSource() == procesosEnColaTemplate.getbBloqueados()) {
+
+            logica.setBloqueado(true);
+        } else if (arg0.getSource() == procesosEnColaTemplate.getbDesbloquear()) {
+
+            logica.desbloquear();
+        } else if (arg0.getSource() == procesosEnColaTemplate.getbColaBloqueados()) {
+
+            pes = !pes;
+            procesosEnColaTemplate.cambiarVista();
         }
 
     }
 
     @Override
     public void mouseEntered(MouseEvent arg0) {
-        if (arg0.getSource() == procesosEnColaTemplate.getbAddColMenorRagafa() ||
-            arg0.getSource() == procesosEnColaTemplate.getbAddColFIFO()) {
+        /* if (arg0.getSource() == procesosEnColaTemplate.getbAddColMenorRagafa() ||
+            arg0.getSource() == procesosEnColaTemplate.getbAddColFIFO() ||
+            arg0.getSource() == procesosEnColaTemplate.getbAddProcesos()) {
             procesosEnColaTemplate.botonAnadir2((JButton) arg0.getSource());
         } else if (arg0.getSource() == procesosEnColaTemplate.getbColaBloqueados()) {
             procesosEnColaTemplate.botonPasarPestana2(pes);
-        }
+        } */
     }
 
     @Override
     public void mouseExited(MouseEvent arg0) {
-        if (arg0.getSource() == procesosEnColaTemplate.getbAddColMenorRagafa() ||
-            arg0.getSource() == procesosEnColaTemplate.getbAddColFIFO()) {
+        /* if (arg0.getSource() == procesosEnColaTemplate.getbAddColMenorRagafa() ||
+            arg0.getSource() == procesosEnColaTemplate.getbAddColFIFO() ||
+            arg0.getSource() == procesosEnColaTemplate.getbAddProcesos()) {
             procesosEnColaTemplate.botonAnadir((JButton) arg0.getSource());
         } else if (arg0.getSource() == procesosEnColaTemplate.getbColaBloqueados()) {
             procesosEnColaTemplate.botonPasarPestana(pes);
-        }
+        } */
     }
 
     @Override

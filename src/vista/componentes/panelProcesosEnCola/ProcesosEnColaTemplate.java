@@ -68,7 +68,7 @@ public class ProcesosEnColaTemplate extends JPanel {
 
     private void crearColaBloqueados() {
         scrollProcesosBloqueados = new JScrollPane();
-        scrollProcesosBloqueados.setBounds(100, 0, 400, 100);
+        scrollProcesosBloqueados.setBounds(70, 0, 410, 100);
         scrollProcesosBloqueados.setBackground(null);
         scrollProcesosBloqueados.setBorder(BorderFactory.createTitledBorder(borderT, "Cola de bloqueados",
                 SwingConstants.LEFT, 0, fuente17, Color.WHITE));
@@ -86,7 +86,7 @@ public class ProcesosEnColaTemplate extends JPanel {
                 dibujaColaBloqueados(g2d);
             }
         };
-        lProcesosBloqueados.setPreferredSize(new Dimension(380, 65));
+        lProcesosBloqueados.setPreferredSize(new Dimension(390, 65));
         scrollProcesosBloqueados.setViewportView(lProcesosBloqueados);
         scrollProcesosBloqueados.setVisible(false);
     }
@@ -95,14 +95,14 @@ public class ProcesosEnColaTemplate extends JPanel {
         int anchura = procesosBloqueados.size();
         if (anchura == 0)
             return;
-        y = 55;
+        y = 52;
         x = (anchura * 115) + 10;
         iterador = 0;
         lProcesosBloqueados.setPreferredSize(new Dimension(x, y));
         grph.setColor(new Color(50, 50, 51));
         grph.fillRect(0, 0, x, y);
         x = 10;
-        y = 3;
+        y = 2;
         iT = procesosBloqueados.iterator();
         Proceso proceso;
 
@@ -113,24 +113,24 @@ public class ProcesosEnColaTemplate extends JPanel {
             proceso = procesosBloqueados.get(iterador);
 
             grph.setColor(colorAzul);
-            grph.fillRect(x - 2, y - 2, 109, 59);
+            grph.fillRect(x - 2, y - 2, 93, 54);
 
             grph.setColor(proceso.getColor());
-            grph.fillRect(x, y, 105, 55);
+            grph.fillRect(x, y, 90, 50);
 
             grph.setColor(Color.WHITE);
             grph.drawString("Proceso " + proceso.getNombre(), x + 10, y + 15);
             grph.drawString("Rafaga: " + proceso.getRafaga(), x + 10, y + 30);
             grph.drawString("T. llegada: " + proceso.gettLlegada(), x + 10, y + 45);
             iterador++;
-            x += 115;
+            x += 90;
         }
         scrollProcesosBloqueados.doLayout();
     }
 
     private void crearFIFO() {
         scrollColaFIFO = new JScrollPane();
-        scrollColaFIFO.setBounds(948, 0, 400, 100);
+        scrollColaFIFO.setBounds(938, 0, 410, 100);
         scrollColaFIFO.setBackground(null);
         scrollColaFIFO.setBorder(
                 BorderFactory.createTitledBorder(borderT, "Cola FIFO", SwingConstants.LEFT, 0, fuente17, Color.WHITE));
@@ -150,7 +150,7 @@ public class ProcesosEnColaTemplate extends JPanel {
                 dibujaColaFIFO(g2d);
             }
         };
-        lProcesosFIFO.setPreferredSize(new Dimension(380, 65));
+        lProcesosFIFO.setPreferredSize(new Dimension(390, 65));
         scrollColaFIFO.setViewportView(lProcesosFIFO);
     }
 
@@ -158,14 +158,14 @@ public class ProcesosEnColaTemplate extends JPanel {
         int anchura = procesosFIFO.size();
         if (anchura == 0)
             return;
-        y = 55;
+        y = 52;
         x = (anchura * 115) + 10;
         iterador = 0;
         lProcesosFIFO.setPreferredSize(new Dimension(x, y));
         g2d.setColor(new Color(50, 50, 51));
         g2d.fillRect(0, 0, x, y);
         x = 10;
-        y = 3;
+        y = 2;
         iT = procesosFIFO.iterator();
         Proceso proceso;
 
@@ -176,24 +176,24 @@ public class ProcesosEnColaTemplate extends JPanel {
             proceso = procesosFIFO.get(iterador);
 
             g2d.setColor(colorAzul);
-            g2d.fillRect(x - 2, y - 2, 109, 59);
+            g2d.fillRect(x - 2, y - 2, 94, 54);
 
             g2d.setColor(proceso.getColor());
-            g2d.fillRect(x, y, 105, 55);
+            g2d.fillRect(x, y, 90, 50);
 
             g2d.setColor(Color.WHITE);
             g2d.drawString("Proceso " + proceso.getNombre(), x + 10, y + 15);
             g2d.drawString("Rafaga: " + proceso.getRafaga(), x + 10, y + 30);
             g2d.drawString("Enveje: " + proceso.getEnvejecimiento(), x + 10, y + 45);
             iterador++;
-            x += 115;
+            x += 100;
         }
         scrollColaFIFO.doLayout();
     }
 
     private void crearMenorRafaga() {
         scrollColaMenorRafaga = new JScrollPane();
-        scrollColaMenorRafaga.setBounds(524, 0, 400, 100);
+        scrollColaMenorRafaga.setBounds(504, 0, 410, 100);
         scrollColaMenorRafaga.setBackground(null);
         scrollColaMenorRafaga.setBorder(BorderFactory.createTitledBorder(borderT, "Cola Menor Rafaga",
                 SwingConstants.LEFT, 0, fuente17, Color.WHITE));
@@ -213,7 +213,7 @@ public class ProcesosEnColaTemplate extends JPanel {
                 dibujaColaMenorRafaga(g2d);
             }
         };
-        lProcesosMenorRafaga.setPreferredSize(new Dimension(380, 65));
+        lProcesosMenorRafaga.setPreferredSize(new Dimension(390, 65));
         scrollColaMenorRafaga.setViewportView(lProcesosMenorRafaga);
     }
 
@@ -255,7 +255,7 @@ public class ProcesosEnColaTemplate extends JPanel {
 
     private void crearRoundRobin() {
         scrollProcesosRoundRobin = new JScrollPane();
-        scrollProcesosRoundRobin.setBounds(100, 0, 400, 100);
+        scrollProcesosRoundRobin.setBounds(70, 0, 410, 100);
         scrollProcesosRoundRobin.setBackground(null);
         scrollProcesosRoundRobin.setBorder(BorderFactory.createTitledBorder(borderT, "Cola Round Robin",
                 SwingConstants.LEFT, 0, fuente17, Color.WHITE));
@@ -275,7 +275,7 @@ public class ProcesosEnColaTemplate extends JPanel {
                 dibujaColaRoundRobin(g2d);
             }
         };
-        lProcesosRoundRobin.setPreferredSize(new Dimension(380, 65));
+        lProcesosRoundRobin.setPreferredSize(new Dimension(390, 65));
         scrollProcesosRoundRobin.setViewportView(lProcesosRoundRobin);
 
     }
@@ -318,7 +318,7 @@ public class ProcesosEnColaTemplate extends JPanel {
     }
 
     private void crearObjetosDecoradores() {
-        fuente = new Font("Comic Sans MS", Font.PLAIN, 15);
+        fuente = new Font("Comic Sans MS", Font.BOLD, 13);
         fuente17 = new Font("Comic Sans MS", Font.PLAIN, 17);
         borderT = BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY);
         iBloquear = new ImageIcon("resources/img/bloquear.png");
@@ -336,10 +336,10 @@ public class ProcesosEnColaTemplate extends JPanel {
     private void crearBotones() {
 
         bAddProcesos = new JButton("<html><div align='center'>Agregar Procesos</div></html>");
-        bAddProcesos.setBounds(10, 10, 80, 40);
+        bAddProcesos.setBounds(25, 40, 20, 20);
         bAddProcesos.setFocusable(false);
         bAddProcesos.setContentAreaFilled(false);
-        bAddProcesos.addActionListener(procesosEnColaComponent);
+        bAddProcesos.addMouseListener(procesosEnColaComponent);
         bAddProcesos.setFont(fuente);
         bAddProcesos.setForeground(Color.WHITE);
         bAddProcesos.setBackground(null);
@@ -348,35 +348,35 @@ public class ProcesosEnColaTemplate extends JPanel {
         this.add(bAddProcesos);
 
         bBloqueados = new JButton();
-        bBloqueados.setBounds(10, 60, 40, 40);
+        bBloqueados.setBounds(10, 70, 20, 20);
         bBloqueados.setFocusable(false);
         bBloqueados.setContentAreaFilled(false);
-        bBloqueados.addActionListener(procesosEnColaComponent);
+        bBloqueados.addMouseListener(procesosEnColaComponent);
         bBloqueados.setFont(fuente);
         bBloqueados.setForeground(Color.WHITE);
         bBloqueados.setBackground(null);
         bBloqueados.setCursor(cMano);
-        iAux = new ImageIcon(iBloquear.getImage().getScaledInstance(30, 30, Image.SCALE_AREA_AVERAGING));
+        iAux = new ImageIcon(iBloquear.getImage().getScaledInstance(20, 20, Image.SCALE_AREA_AVERAGING));
         bBloqueados.setIcon(iAux);
         bBloqueados.setBorder(null);
         this.add(bBloqueados);
 
         bDesbloquear = new JButton();
-        bDesbloquear.setBounds(50, 60, 40, 40);
+        bDesbloquear.setBounds(40, 70, 20, 20);
         bDesbloquear.setFocusable(false);
         bDesbloquear.setContentAreaFilled(false);
-        bDesbloquear.addActionListener(procesosEnColaComponent);
+        bDesbloquear.addMouseListener(procesosEnColaComponent);
         bDesbloquear.setFont(fuente);
         bDesbloquear.setForeground(Color.WHITE);
         bDesbloquear.setBackground(null);
         bDesbloquear.setCursor(cMano);
-        iAux = new ImageIcon(iDesbloquear.getImage().getScaledInstance(30, 30, Image.SCALE_AREA_AVERAGING));
+        iAux = new ImageIcon(iDesbloquear.getImage().getScaledInstance(20, 20, Image.SCALE_AREA_AVERAGING));
         bDesbloquear.setIcon(iAux);
         bDesbloquear.setBorder(null);
         this.add(bDesbloquear);
 
         bAddColMenorRagafa = new JButton();
-        bAddColMenorRagafa.setBounds(502, 40, 20, 20);
+        bAddColMenorRagafa.setBounds(482, 40, 20, 20);
         bAddColMenorRagafa.setContentAreaFilled(false);
         iAux = new ImageIcon(iAnadir.getImage().getScaledInstance(20, 20, Image.SCALE_AREA_AVERAGING));
         bAddColMenorRagafa.setIcon(iAux);
@@ -387,8 +387,7 @@ public class ProcesosEnColaTemplate extends JPanel {
         this.add(bAddColMenorRagafa);
 
         bColaBloqueados = new JButton();
-        bColaBloqueados.setBounds(502, 12, 20, 20);
-        bColaBloqueados.addActionListener(procesosEnColaComponent);
+        bColaBloqueados.setBounds(25, 12, 20, 20);
         bColaBloqueados.addMouseListener(procesosEnColaComponent);
         bColaBloqueados.setBackground(null);
         bColaBloqueados.setCursor(cMano);
@@ -399,7 +398,7 @@ public class ProcesosEnColaTemplate extends JPanel {
         this.add(bColaBloqueados);
 
         bAddColFIFO = new JButton();
-        bAddColFIFO.setBounds(926, 40, 20, 20);
+        bAddColFIFO.setBounds(916, 40, 20, 20);
         bAddColFIFO.setContentAreaFilled(false);
         iAux = new ImageIcon(iAnadir.getImage().getScaledInstance(20, 20, Image.SCALE_AREA_AVERAGING));
         bAddColFIFO.setIcon(iAux);
