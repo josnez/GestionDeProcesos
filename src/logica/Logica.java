@@ -12,114 +12,162 @@ import java.awt.Color;
 
 public class Logica {
 
-    private Queue<Proceso> colaProcesos;
-    private ArrayList<Proceso> colaProcesosGrafica, colaProcesosBloqueados;
+    private Queue<Proceso> colProRoundRobin, colProMenorRafaga, colProFIFO, colAux;
+    private ArrayList<Proceso> colProGraRoundRobin, colProBloqueadosRoundRobin, colProGraMenorRafaga, colProGraFIFO;
     private Iterator<Proceso> iT;
 
     private VistaPrincipalComponent vistaPrincipalComponent;
     private Procesador procesador;
 
-    private int tiempoInicial, tiempoFinal, tiempo, numeroN;
-    private boolean bloqueado;
+    private int tiempoInicial, tiempoFinal, tiempo, numeroN, envejecimientoMax;
+    private boolean bloqueado, agregando;
 
     public Logica() {
 
         bloqueado = false;
+        agregando = false;
         tiempo = 0;
         numeroN = 0;
         tiempoInicial = 0;
         tiempoFinal = 3;
-        colaProcesos = new LinkedList<>();
-        colaProcesosBloqueados = new ArrayList<>();
-        colaProcesosGrafica = new ArrayList<>();
+        envejecimientoMax = 6;
+        colProRoundRobin = new LinkedList<>();
+        colProBloqueadosRoundRobin = new ArrayList<>();
+        colProGraRoundRobin = new ArrayList<>();
+        colProMenorRafaga = new LinkedList<>();
+        colProGraMenorRafaga = new ArrayList<>();
+        colProFIFO = new LinkedList<>();
+        colProGraFIFO = new ArrayList<>();
         vistaPrincipalComponent = new VistaPrincipalComponent(this);
         procesador = new Procesador(this, 4);
     }
 
-    public void nuevosProcesos() {
+    // Cola Round Robin
+
+    public void nuevosProcesosRoundRobin() {
         int n = (int) Math.floor(Math.random() * 5 + 1);
-        ArrayList<Proceso> colaAux = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            Proceso c = new Proceso(generarNombre()+numeroN, generarColor(), tiempo, generarRafaga(), generarPrioridad());
-            System.out.println(c.getRafaga());
+            Proceso c = new Proceso(generarNombre() + numeroN, generarColor(), tiempo, generarRafaga(),
+                    generarPrioridad());
             numeroN++;
-            colaAux.add(c);
+            colProRoundRobin.add(c);
+            colProGraRoundRobin.add(c);
         }
         tiempo++;
 
-        if (!procesador.isAlive()){
-            ordenarPorRafaga(colaAux);
+        if (!procesador.isAlive()) {
             procesador.start();
         }
-        else {
-            ordenarPorRafaga(colaAux);
+    }
+    // ----------------------------------------------------------------
+
+    // Cola Menor Rafaga
+
+    public void nuevosProcesosMenorRafaga() {
+        agregando = true;
+        boolean seEjecuto = false;
+        while (!seEjecuto) {
+            if (!procesador.isEnvejeciendo()) {
+                int n = (int) Math.floor(Math.random() * 5 + 1);
+                ArrayList<Proceso> colaAux = new ArrayList<>();
+                for (int i = 0; i < n; i++) {
+                    Proceso c = new Proceso(generarNombre() + numeroN, generarColor(), tiempo, generarRafaga(),
+                            generarPrioridad());
+                    colaAux.add(c);
+                    numeroN++;
+                }
+                tiempo++;
+
+                if (!procesador.isAlive()) {
+                    ordenarPorRafaga(colaAux);
+                    procesador.start();
+                } else {
+                    ordenarPorRafaga(colaAux);
+                }
+                seEjecuto = true;
+            }
         }
+        agregando = false;
     }
 
     public void ordenarPorRafaga(ArrayList<Proceso> colaAux) {
-        for (Proceso proceso : colaProcesos) {
+        for (Proceso proceso : colProMenorRafaga) {
             colaAux.add(proceso);
         }
         Proceso temporal;
         for (int i = 0; i < colaAux.size(); i++) {
             for (int j = 1; j < (colaAux.size() - i); j++) {
-                if (colaAux.get(j-1).getRafaga() > colaAux.get(j).getRafaga()) {
-                    temporal = colaAux.get(j-1);
-                    colaAux.set(j-1, colaAux.get(j));
+                if (colaAux.get(j - 1).getRafaga() > colaAux.get(j).getRafaga()) {
+                    temporal = colaAux.get(j - 1);
+                    colaAux.set(j - 1, colaAux.get(j));
                     colaAux.set(j, temporal);
                 }
             }
         }
-        
-        iT = colaProcesos.iterator();
+
+        iT = colProMenorRafaga.iterator();
         while (iT.hasNext()) {
-            colaProcesos.poll();
+            colProMenorRafaga.poll();
         }
-        System.out.println("Ordenado");
-        colaProcesosGrafica.clear();
+        colProGraMenorRafaga.clear();
         for (Proceso proceso : colaAux) {
-            System.out.println(proceso.getRafaga());
-            colaProcesos.add(proceso);
+            colProMenorRafaga.add(proceso);
             // Auxiliar para dibujar
-            colaProcesosGrafica.add(proceso);
+            colProGraMenorRafaga.add(proceso);
         }
-        
+
+    }
+    // -----------------------------------------------------------------
+
+    // Cola FIFO
+
+    public void nuevosProcesosFIFO() {
+        agregando = true;
+        boolean seEjecuto = false;
+        while (!seEjecuto) {
+            if (!procesador.isEnvejeciendo()) {
+                int n = (int) Math.floor(Math.random() * 5 + 1);
+                for (int i = 0; i < n; i++) {
+                    Proceso c = new Proceso(generarNombre() + numeroN, generarColor(), tiempo, generarRafaga(),
+                            generarPrioridad());
+                    numeroN++;
+                    colProFIFO.add(c);
+                    colProGraFIFO.add(c);
+                }
+                tiempo++;
+
+                if (!procesador.isAlive()) {
+                    procesador.start();
+                }
+                seEjecuto = true;
+            }
+        }
+        agregando = false;
     }
 
-    private void ordenarPorPrioridad(ArrayList<Proceso> colaAux) {
-        for (Proceso proceso : colaProcesos) {
-            colaAux.add(proceso);
-        }
-        Proceso temporal;
-        for (int i = 0; i < colaAux.size(); i++) {
-            for (int j = 1; j < (colaAux.size() - i); j++) {
-                if (colaAux.get(j-1).getPrioridad() > colaAux.get(j).getPrioridad()) {
-                    temporal = colaAux.get(j-1);
-                    colaAux.set(j-1, colaAux.get(j));
-                    colaAux.set(j, temporal);
-                }
-            }
-        }
-        
-        iT = colaProcesos.iterator();
-        while (iT.hasNext()) {
-            colaProcesos.poll();
-        }
-        System.out.println("Ordenado");
-        colaProcesosGrafica.clear();
-        for (Proceso proceso : colaAux) {
-            System.out.println(proceso.getRafaga());
-            colaProcesos.add(proceso);
-            // Auxiliar para dibujar
-            colaProcesosGrafica.add(proceso);
-        }
-        
-    }
+    // -------------------------------------------------------------------
 
     public void desbloquear() {
-        ArrayList<Proceso> colita = new ArrayList<>();
-        colita.add(colaProcesosBloqueados.remove(0));
-        ordenarPorRafaga(colita);
+        Proceso p = colProBloqueadosRoundRobin.remove(0);
+
+        switch (p.getMeBloquearonEn()) {
+            case "RoundRobin":
+                colProRoundRobin.add(p);
+                colProGraRoundRobin.add(p);
+                break;
+            case "MenorRafaga":
+                ArrayList<Proceso> colita = new ArrayList<>();
+                colita.add(p);
+                ordenarPorRafaga(colita);
+                break;
+            case "FIFO":
+                colProFIFO.add(p);
+                colProGraFIFO.add(p);
+                break;
+            default:
+                System.err.println("Algo paso desbloqueando");
+                break;
+        }
         actualizarColaProcesos();
         actualizarColaProcesosBloqueados();
     }
@@ -130,7 +178,7 @@ public class Logica {
 
     private String generarNombre() {
         int n = (int) Math.floor(Math.random() * (90 - 64 + 1) + 64);
-        return ""+(char) n;
+        return "" + (char) n;
     }
 
     private int generarRafaga() {
@@ -146,8 +194,8 @@ public class Logica {
         return c;
     }
 
-    public int rafagaMasCorta(){
-        return colaProcesos.peek().getRafaga();
+    public int rafagaMasCorta() {
+        return colProRoundRobin.peek().getRafaga();
     }
 
     public void actualizarColaProcesos() {
@@ -174,20 +222,12 @@ public class Logica {
         vistaPrincipalComponent.actualizarDiagrama();
     }
 
-    public boolean estaBloqueado(){
+    public boolean estaBloqueado() {
         return bloqueado;
     }
 
-    public ArrayList<Proceso> getColaProcesosGrafica() {
-        return colaProcesosGrafica;
-    }
-
-    public Queue<Proceso> getColaProcesos() {
-        return colaProcesos;
-    }
-
-    public ArrayList<Proceso> getColaProcesosBloqueados() {
-        return colaProcesosBloqueados;
+    public boolean estaAgregando() {
+        return agregando;
     }
 
     public int getTiempoInicial() {
@@ -208,6 +248,34 @@ public class Logica {
 
     public void setBloqueado(boolean b) {
         this.bloqueado = b;
+    }
+
+    public Queue<Proceso> getColProRoundRobin() {
+        return colProRoundRobin;
+    }
+
+    public Queue<Proceso> getColProMenorRafaga() {
+        return colProMenorRafaga;
+    }
+
+    public Queue<Proceso> getColProFIFO() {
+        return colProFIFO;
+    }
+
+    public ArrayList<Proceso> getColProGraRoundRobin() {
+        return colProGraRoundRobin;
+    }
+
+    public ArrayList<Proceso> getColProBloqueadosRoundRobin() {
+        return colProBloqueadosRoundRobin;
+    }
+
+    public ArrayList<Proceso> getColProGraMenorRafaga() {
+        return colProGraMenorRafaga;
+    }
+
+    public ArrayList<Proceso> getColProGraFIFO() {
+        return colProGraFIFO;
     }
 
 }

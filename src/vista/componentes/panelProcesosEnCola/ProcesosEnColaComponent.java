@@ -20,8 +20,10 @@ public class ProcesosEnColaComponent implements ActionListener, MouseListener {
 
         this.logica = logica;
         pes = false;
-        procesosEnColaTemplate = new ProcesosEnColaTemplate(this, logica.getColaProcesosGrafica(),
-                logica.getColaProcesosBloqueados());
+        procesosEnColaTemplate = new ProcesosEnColaTemplate(
+            this, logica.getColProGraRoundRobin(), logica.getColProBloqueadosRoundRobin(), logica.getColProGraMenorRafaga(),
+            logica.getColProGraFIFO()
+        );
     }
 
     public ProcesosEnColaTemplate gProcesosEnColaTemplate() {
@@ -41,8 +43,7 @@ public class ProcesosEnColaComponent implements ActionListener, MouseListener {
 
         if (e.getSource() == procesosEnColaTemplate.getbAddProcesos()) {
 
-            logica.nuevosProcesos();
-            // procesosEnColaTemplate.actualizar();
+            logica.nuevosProcesosRoundRobin();
             procesosEnColaTemplate.getScrollProcesosRoundRobin().repaint();
         } else if (e.getSource() == procesosEnColaTemplate.getbBloqueados()) {
             logica.setBloqueado(true);
@@ -57,11 +58,22 @@ public class ProcesosEnColaComponent implements ActionListener, MouseListener {
     @Override
     public void mouseClicked(MouseEvent arg0) {
 
+        if (arg0.getSource() == procesosEnColaTemplate.getbAddColMenorRagafa()) {
+
+            logica.nuevosProcesosMenorRafaga();
+            procesosEnColaTemplate.getScrollColaMenorRafaga().repaint();
+        } else if (arg0.getSource() == procesosEnColaTemplate.getbAddColFIFO()) {
+
+            logica.nuevosProcesosFIFO();
+            procesosEnColaTemplate.getScrollColaFIFO().repaint();
+        }
+
     }
 
     @Override
     public void mouseEntered(MouseEvent arg0) {
-        if (arg0.getSource() == procesosEnColaTemplate.getbAddSJF() || arg0.getSource() == procesosEnColaTemplate.getbMenorRafaga()) {
+        if (arg0.getSource() == procesosEnColaTemplate.getbAddColMenorRagafa() ||
+            arg0.getSource() == procesosEnColaTemplate.getbAddColFIFO()) {
             procesosEnColaTemplate.botonAnadir2((JButton) arg0.getSource());
         } else if (arg0.getSource() == procesosEnColaTemplate.getbColaBloqueados()) {
             procesosEnColaTemplate.botonPasarPestana2(pes);
@@ -70,7 +82,8 @@ public class ProcesosEnColaComponent implements ActionListener, MouseListener {
 
     @Override
     public void mouseExited(MouseEvent arg0) {
-        if (arg0.getSource() == procesosEnColaTemplate.getbAddSJF() || arg0.getSource() == procesosEnColaTemplate.getbMenorRafaga()) {
+        if (arg0.getSource() == procesosEnColaTemplate.getbAddColMenorRagafa() ||
+            arg0.getSource() == procesosEnColaTemplate.getbAddColFIFO()) {
             procesosEnColaTemplate.botonAnadir((JButton) arg0.getSource());
         } else if (arg0.getSource() == procesosEnColaTemplate.getbColaBloqueados()) {
             procesosEnColaTemplate.botonPasarPestana(pes);

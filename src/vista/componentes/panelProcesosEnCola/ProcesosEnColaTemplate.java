@@ -30,7 +30,7 @@ public class ProcesosEnColaTemplate extends JPanel {
 
     private JScrollPane scrollProcesosRoundRobin, scrollProcesosBloqueados, scrollColaFIFO, scrollColaMenorRafaga;
     private JLabel lProcesosRoundRobin, lProcesosBloqueados, lProcesosFIFO, lProcesosMenorRafaga;
-    private JButton bAddProcesos, bBloqueados, bDesbloquear, bAddSJF, bMenorRafaga, bColaBloqueados;
+    private JButton bAddProcesos, bBloqueados, bDesbloquear, bAddColMenorRagafa, bAddColFIFO, bColaBloqueados;
 
     private Border borderT;
     private Font fuente, fuente17;
@@ -44,13 +44,14 @@ public class ProcesosEnColaTemplate extends JPanel {
 
     private ProcesosEnColaComponent procesosEnColaComponent;
 
-    public ProcesosEnColaTemplate(ProcesosEnColaComponent procesosEnColaComponent,
-            ArrayList<Proceso> procesosRoundRobin, ArrayList<Proceso> procesosBloqueados) {
+    public ProcesosEnColaTemplate(
+        ProcesosEnColaComponent procesosEnColaComponent, ArrayList<Proceso> procesosRoundRobin, 
+        ArrayList<Proceso> procesosBloqueados, ArrayList<Proceso> procesosMenorRafaga, ArrayList<Proceso> procesosFIFO) {
 
         this.procesosRoundRobin = procesosRoundRobin;
         this.procesosBloqueados = procesosBloqueados;
-        this.procesosFIFO = new ArrayList<>();
-        this.procesosMenorRafaga = new ArrayList<>();
+        this.procesosMenorRafaga = procesosMenorRafaga;
+        this.procesosFIFO = procesosFIFO;
         this.procesosEnColaComponent = procesosEnColaComponent;
 
         crearObjetosDecoradores();
@@ -183,7 +184,7 @@ public class ProcesosEnColaTemplate extends JPanel {
             g2d.setColor(Color.WHITE);
             g2d.drawString("Proceso " + proceso.getNombre(), x + 10, y + 15);
             g2d.drawString("Rafaga: " + proceso.getRafaga(), x + 10, y + 30);
-            g2d.drawString("T. llegada: " + proceso.gettLlegada(), x + 10, y + 45);
+            g2d.drawString("Enveje: " + proceso.getEnvejecimiento(), x + 10, y + 45);
             iterador++;
             x += 115;
         }
@@ -245,7 +246,7 @@ public class ProcesosEnColaTemplate extends JPanel {
             g2d.setColor(Color.WHITE);
             g2d.drawString("Proceso " + proceso.getNombre(), x + 10, y + 15);
             g2d.drawString("Rafaga: " + proceso.getRafaga(), x + 10, y + 30);
-            g2d.drawString("T. llegada: " + proceso.gettLlegada(), x + 10, y + 45);
+            g2d.drawString("Enve: " + proceso.getEnvejecimiento(), x + 10, y + 45);
             iterador++;
             x += 115;
         }
@@ -374,16 +375,16 @@ public class ProcesosEnColaTemplate extends JPanel {
         bDesbloquear.setBorder(null);
         this.add(bDesbloquear);
 
-        bAddSJF = new JButton();
-        bAddSJF.setBounds(502, 40, 20, 20);
-        bAddSJF.setContentAreaFilled(false);
+        bAddColMenorRagafa = new JButton();
+        bAddColMenorRagafa.setBounds(502, 40, 20, 20);
+        bAddColMenorRagafa.setContentAreaFilled(false);
         iAux = new ImageIcon(iAnadir.getImage().getScaledInstance(20, 20, Image.SCALE_AREA_AVERAGING));
-        bAddSJF.setIcon(iAux);
-        bAddSJF.setFocusable(false);
-        bAddSJF.setBorder(null);
-        bAddSJF.addMouseListener(procesosEnColaComponent);
-        bAddSJF.setCursor(cMano);
-        this.add(bAddSJF);
+        bAddColMenorRagafa.setIcon(iAux);
+        bAddColMenorRagafa.setFocusable(false);
+        bAddColMenorRagafa.setBorder(null);
+        bAddColMenorRagafa.addMouseListener(procesosEnColaComponent);
+        bAddColMenorRagafa.setCursor(cMano);
+        this.add(bAddColMenorRagafa);
 
         bColaBloqueados = new JButton();
         bColaBloqueados.setBounds(502, 12, 20, 20);
@@ -397,16 +398,16 @@ public class ProcesosEnColaTemplate extends JPanel {
         bColaBloqueados.setContentAreaFilled(false);
         this.add(bColaBloqueados);
 
-        bMenorRafaga = new JButton();
-        bMenorRafaga.setBounds(926, 40, 20, 20);
-        bMenorRafaga.setContentAreaFilled(false);
+        bAddColFIFO = new JButton();
+        bAddColFIFO.setBounds(926, 40, 20, 20);
+        bAddColFIFO.setContentAreaFilled(false);
         iAux = new ImageIcon(iAnadir.getImage().getScaledInstance(20, 20, Image.SCALE_AREA_AVERAGING));
-        bMenorRafaga.setIcon(iAux);
-        bMenorRafaga.setFocusable(false);
-        bMenorRafaga.setBorder(null);
-        bMenorRafaga.addMouseListener(procesosEnColaComponent);
-        bMenorRafaga.setCursor(cMano);
-        this.add(bMenorRafaga);
+        bAddColFIFO.setIcon(iAux);
+        bAddColFIFO.setFocusable(false);
+        bAddColFIFO.setBorder(null);
+        bAddColFIFO.addMouseListener(procesosEnColaComponent);
+        bAddColFIFO.setCursor(cMano);
+        this.add(bAddColFIFO);
     }
 
     public void cambiarVista() {
@@ -428,8 +429,9 @@ public class ProcesosEnColaTemplate extends JPanel {
     }
 
     public void actualizar() {
-        this.repaint();
-        this.updateUI();
+        scrollProcesosRoundRobin.repaint();
+        scrollColaMenorRafaga.repaint();
+        scrollColaFIFO.repaint();
     }
 
     public void actualizarBloqueados() {
@@ -473,12 +475,12 @@ public class ProcesosEnColaTemplate extends JPanel {
         return lProcesosRoundRobin;
     }
 
-    public JButton getbAddSJF() {
-        return bAddSJF;
+    public JButton getbAddColMenorRagafa() {
+        return bAddColMenorRagafa;
     }
 
-    public JButton getbMenorRafaga() {
-        return bMenorRafaga;
+    public JButton getbAddColFIFO() {
+        return bAddColFIFO;
     }
 
     public void botonAnadir2(JButton b) {

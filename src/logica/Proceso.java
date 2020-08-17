@@ -4,7 +4,7 @@ import java.awt.Color;
 
 public class Proceso implements Cloneable {
     
-    private String nombre;
+    private String nombre, meBloquearonEn;
     private int tLlegada, tLlegadaAux, rafaga, rafagaEjecutada, tComienzo, tFinal, tRetorno, tEspera, prioridad, envejecimiento;
     private Color color;
     
@@ -103,5 +103,12 @@ public class Proceso implements Cloneable {
         this.envejecimiento = envejecimiento;
     }
 
+    public String getMeBloquearonEn() {
+        return meBloquearonEn;
+    }
+
+    public void setMeBloquearonEn(String meBloquearonEn) {
+        this.meBloquearonEn = meBloquearonEn;
+    }
 
 }
